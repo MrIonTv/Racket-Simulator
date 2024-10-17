@@ -15,6 +15,10 @@ public class DefaultEnvironment implements Environment{
         this.systemEnvironment = systemEnvironment;
     }
 
+    public DefaultEnvironment() {
+        this.callables = new HashMap<Symbol, Callable>();
+        this.systemEnvironment = null;
+    }
 
     /**
      * @param symbol The symbol that the callable will be related.

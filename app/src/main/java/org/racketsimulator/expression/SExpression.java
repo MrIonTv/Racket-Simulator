@@ -1,8 +1,11 @@
 package org.racketsimulator.expression;
 
 import org.racketsimulator.callable.Callable;
+import org.racketsimulator.callable.DefinedCallable;
 import org.racketsimulator.callable.SelfCallable;
 import org.racketsimulator.environment.Environment;
+import org.racketsimulator.expressionbuilder.EnvironmentBuilder;
+import org.racketsimulator.expressionbuilder.ExpressionBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,10 +45,14 @@ public class SExpression implements Expression{
 
         proc = validateSymbol((QExpression) action);
 
-        List<Expression> args = List.of();
-        args.addAll(values.subList(1, values.size() - 1));
+        List<Expression> args = values.subList(1, values.size() - 1);
 
-        return proc.execute(args);
+        if (!(proc instanceof DefinedCallable))
+            return proc.execute(Optional.of(args));
+
+        ExpressionBuilder constructor = new EnvironmentBuilder(source, runtime);
+        Expression procExpression = constructor.build(proc.execute(Optional.empty()).content());
+        return procExpression.evaluate();
     }
 
     /**
@@ -89,8 +96,7 @@ public class SExpression implements Expression{
 
     private Expression accessSymbol(QExpression action) {
         String value = action.content();
-        value = value.replace("'( ", "");
-        value = value.replace(" )", "");
+        value = value.substring(3, value.length() - 1);
 
         if (value.isEmpty())
             return new Empty();

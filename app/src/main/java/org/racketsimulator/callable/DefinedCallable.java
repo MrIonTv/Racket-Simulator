@@ -5,6 +5,7 @@ import org.racketsimulator.expression.QExpression;
 import org.racketsimulator.expression.Symbol;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DefinedCallable implements Callable{
     private final String body;
@@ -14,12 +15,12 @@ public class DefinedCallable implements Callable{
     }
 
     /**
-     * @param args QExpressions to be evaluated
-     * @return
+     * @param args Not used.
+     * @return The body of the callable.
      */
     @Override
-    public Expression execute(List<Expression> args) {
-        List<Expression> body = List.of(new Symbol(this.body));
+    public Expression execute(Optional<List<Expression>> args) {
+        final List<Expression> body = List.of(new Symbol(this.body));
         return new QExpression(body);
     }
 }

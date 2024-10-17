@@ -16,7 +16,7 @@ public class Empty implements Expression{
      */
     @Override
     public String content() {
-        return "'()";
+        return "'( )";
     }
 
     /**

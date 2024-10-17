@@ -23,7 +23,7 @@ public class QExpression implements Expression{
     @Override
     public String content() {
         if (values.isEmpty())
-            return "'()";
+            return "'( )";
 
         StringBuilder result = new StringBuilder();
         result.append("'( ");
