@@ -1,9 +1,8 @@
 package org.racketsimulator.expression;
 
 import org.racketsimulator.callable.Callable;
+import org.racketsimulator.callable.SelfCallable;
 import org.racketsimulator.environment.Environment;
-import org.racketsimulator.parser.EnvironmentParser;
-import org.racketsimulator.parser.Parser;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,64 +27,75 @@ public class SExpression implements Expression{
      */
     @Override
     public Expression evaluate() {
-        final Expression action = values.getFirst().evaluate();
+        Expression action = values.getFirst().evaluate();
 
-        if (values.size() == 1) {
+        if (valueSize() == 1) {
             return action.evaluate();
+        }
+        if (action instanceof SExpression) {
+            action = action.evaluate();
         }
 
         Callable proc;
-        switch (action) {
-            case Symbol symbol -> proc = callSymbol((Symbol) action);
-            case QExpression qExpression -> proc = callSymbol((Symbol) action.evaluate());
-            case null, default -> throw new InvalidExpression("SExpression requires a Callable or a Symbol as " +
-                    "first argument.");
-        }
+        if (!(action instanceof QExpression))
+            throw new InvalidExpression("SExpression requires a QExpression as first argument.");
 
-        List<Expression> args = values.subList(1, values.size()-1);
-        List<QExpression> qArgs = List.of();
-        for (Expression arg : args) {
-            switch (arg) {
-                case QExpression ignored -> qArgs.add((QExpression) arg);
-                case SExpression ignored -> qArgs.add((QExpression) arg.evaluate());
-                case Symbol ignored -> qArgs.add(runtimeSymbol((Symbol) arg));
-                case null, default -> throw new InvalidExpression("Unexpected Expression Type");
-            }
-        }
+        proc = validateSymbol((QExpression) action);
 
-        return proc.execute(qArgs);
+        List<Expression> args = List.of();
+        args.addAll(values.subList(1, values.size() - 1));
+
+        return proc.execute(args);
     }
 
     /**
-     * @return
+     * @return the value of every Expression in the SExpression.
      */
     @Override
     public String content() {
-        return "";
-    }
-    // TODO
-    private Callable callSymbol(Symbol type) {
-        Optional<Callable> proc;
-        proc = runtime.search(type);
-        if (proc.isPresent()) {
-            QExpression resumed
-            return proc.get();
+        StringBuilder result = new StringBuilder();
+        for (Expression value : values) {
+            result.append(value.content()).append(" ");
         }
-
-        proc = source.search(type);
-        if (proc.isPresent())
-            return proc.get();
-
-        throw new InvalidExpression("The Proc Symbol for the SExpression can't be resolved.");
+        return result.toString();
     }
-    private QExpression runtimeSymbol(Symbol arg) {
-        Optional<Callable> proc = runtime.search(arg);
-        if (proc.isPresent()) {
-            final List<QExpression> empty = List.of();
-            Parser parser = new EnvironmentParser(runtime, source);
-            return (QExpression) parser.build(proc.get().execute(empty).content());
-        }
 
-        throw new InvalidExpression("The Proc Symbol for the SExpression can't be resolved.");
+    /**
+     * @return the quantity of expressions
+     */
+    @Override
+    public int valueSize() {
+        return values.size();
+    }
+
+    private Callable validateSymbol(QExpression action) {
+        if (action.valueSize() != 1)
+            throw new InvalidExpression("The callable must be single.");
+
+        Expression symbol = accessSymbol(action);
+        if (!(symbol instanceof Symbol))
+            return new SelfCallable(symbol);
+
+        Optional<Callable> callable = runtime.search((Symbol) symbol);
+        if (callable.isPresent())
+            return callable.get();
+
+        callable = source.search((Symbol) symbol);
+        if (callable.isPresent())
+            return callable.get();
+
+        throw new InvalidExpression("Impossible to solve the symbol: " + symbol.content());
+    }
+
+    private Expression accessSymbol(QExpression action) {
+        String value = action.content();
+        value = value.replace("'( ", "");
+        value = value.replace(" )", "");
+
+        if (value.isEmpty())
+            return new Empty();
+        if (value.matches("-?\\d+"))
+            return new Numeric(Integer.parseInt(value));
+        return new Symbol(value);
     }
 }

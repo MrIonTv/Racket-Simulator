@@ -24,4 +24,12 @@ public class Symbol implements Expression{
     public String content() {
         return value;
     }
+
+    /**
+     * @return
+     */
+    @Override
+    public int valueSize() {
+        return 1;
+    }
 }

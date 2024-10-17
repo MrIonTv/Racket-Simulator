@@ -1,7 +1,5 @@
 package org.racketsimulator.expression;
 
-import org.racketsimulator.environment.Environment;
-
 public class Numeric implements Expression{
     private final int value;
     
@@ -23,6 +21,14 @@ public class Numeric implements Expression{
     @Override
     public String content() {
         return value + "";
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public int valueSize() {
+        return 1;
     }
 
 }

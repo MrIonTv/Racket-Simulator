@@ -16,6 +16,14 @@ public class Empty implements Expression{
      */
     @Override
     public String content() {
-        return "";
+        return "'()";
+    }
+
+    /**
+     * @return 0
+     */
+    @Override
+    public int valueSize() {
+        return 0;
     }
 }

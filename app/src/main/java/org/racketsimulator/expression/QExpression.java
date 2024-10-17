@@ -1,8 +1,5 @@
 package org.racketsimulator.expression;
 
-import org.racketsimulator.environment.Environment;
-
-import java.util.Collection;
 import java.util.List;
 
 public class QExpression implements Expression{
@@ -29,14 +26,19 @@ public class QExpression implements Expression{
             return "'()";
 
         StringBuilder result = new StringBuilder();
+        result.append("'( ");
         for (Expression value : values) {
-            if (!(value instanceof Empty)){
-                result.append(value.content()).append(" ");
-            } else {
-                result.append("'()").append(" ");
-            }
+            result.append(value.content()).append(" ");
         }
+        result.append(")");
+        return result.toString();
+    }
 
-        return result.toString().trim();
+    /**
+     * @return the quantity of expressions that are contained.
+     */
+    @Override
+    public int valueSize() {
+        return values.size();
     }
 }

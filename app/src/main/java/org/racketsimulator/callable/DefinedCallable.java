@@ -14,11 +14,11 @@ public class DefinedCallable implements Callable{
     }
 
     /**
-     * @param qArgs QExpressions to be evaluated
+     * @param args QExpressions to be evaluated
      * @return
      */
     @Override
-    public Expression execute(List<QExpression> qArgs) {
+    public Expression execute(List<Expression> args) {
         List<Expression> body = List.of(new Symbol(this.body));
         return new QExpression(body);
     }
