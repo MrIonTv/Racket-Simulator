@@ -7,6 +7,7 @@ import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expressionbuilder.EnvironmentBuilder;
 import org.racketsimulator.expressionbuilder.ExpressionBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,18 +41,18 @@ public class SExpression implements Expression{
         }
 
         Callable proc;
-        if (!(action instanceof QExpression))
-            throw new InvalidExpression("SExpression requires a QExpression as first argument.");
+        if ((action instanceof QExpression))
+            throw new InvalidExpression("SExpression requires any Expression but a QExpression as first argument.");
 
-        proc = validateSymbol((QExpression) action);
+        proc = validateSymbol((Symbol) action);
 
         List<Expression> args = values.subList(1, values.size() - 1);
 
         if (!(proc instanceof DefinedCallable))
-            return proc.execute(Optional.of(args));
+            return proc.execute(args);
 
         ExpressionBuilder constructor = new EnvironmentBuilder(source, runtime);
-        Expression procExpression = constructor.build(proc.execute(Optional.empty()).content());
+        Expression procExpression = constructor.build(proc.execute(new ArrayList<>()).content());
         return procExpression.evaluate();
     }
 
@@ -75,7 +76,7 @@ public class SExpression implements Expression{
         return values.size();
     }
 
-    private Callable validateSymbol(QExpression action) {
+    private Callable validateSymbol(Symbol action) {
         if (action.valueSize() != 1)
             throw new InvalidExpression("The callable must be single.");
 
@@ -94,7 +95,7 @@ public class SExpression implements Expression{
         throw new InvalidExpression("Impossible to solve the symbol: " + symbol.content());
     }
 
-    private Expression accessSymbol(QExpression action) {
+    private Expression accessSymbol(Symbol action) {
         String value = action.content();
         value = value.substring(3, value.length() - 1);
 

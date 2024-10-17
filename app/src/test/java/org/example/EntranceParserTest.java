@@ -14,14 +14,12 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EntranceParserTest {
 
     private EntranceParser parser;
-    private Environment runtimeEnv;
-    private Environment sourceEnv;
 
     @BeforeEach
     public void setUp() {
         // Puedes simular tus entornos o usar mocks
-        sourceEnv = new DefaultEnvironment();
-        runtimeEnv = new DefaultEnvironment();
+        Environment sourceEnv = new DefaultEnvironment();
+        Environment runtimeEnv = new DefaultEnvironment();
 
         // Crea el EntranceParser
         parser = new EntranceParser(runtimeEnv, sourceEnv);

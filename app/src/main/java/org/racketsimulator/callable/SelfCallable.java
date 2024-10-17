@@ -3,7 +3,6 @@ package org.racketsimulator.callable;
 import org.racketsimulator.expression.Expression;
 
 import java.util.List;
-import java.util.Optional;
 
 public class SelfCallable implements Callable{
     private final Expression selfExpression;
@@ -14,10 +13,13 @@ public class SelfCallable implements Callable{
 
     /**
      * @param args not used.
-     * @return used to return not QExpressions.
+     * @return used to return Symbols, Empties and Numerics.
      */
     @Override
-    public Expression execute(Optional<List<Expression>> args) {
+    public Expression execute(List<Expression> args) {
+        if (!args.isEmpty())
+            throw new InvalidCallableArgs("SelfCallable requires exactly 0 args");
+
         return selfExpression;
     }
 }

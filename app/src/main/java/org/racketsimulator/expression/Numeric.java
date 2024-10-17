@@ -24,7 +24,7 @@ public class Numeric implements Expression{
     }
 
     /**
-     * @return
+     * @return always 1
      */
     @Override
     public int valueSize() {

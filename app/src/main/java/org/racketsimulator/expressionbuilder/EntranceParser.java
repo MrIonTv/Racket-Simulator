@@ -128,6 +128,6 @@ public class EntranceParser implements ExpressionBuilder {
         Optional<Callable> value = runtime.search(token);
         if (value.isEmpty())
             return token;
-        return new Symbol(value.get().execute(Optional.empty()).content());
+        return new Symbol(value.get().execute(new ArrayList<>()).content());
     }
 }

@@ -17,7 +17,7 @@ public class DefaultEnvironment implements Environment{
 
     public DefaultEnvironment() {
         this.callables = new HashMap<Symbol, Callable>();
-        this.systemEnvironment = null;
+        this.systemEnvironment = this;
     }
 
     /**
@@ -28,8 +28,7 @@ public class DefaultEnvironment implements Environment{
     public void defineSymbol(Symbol symbol, Callable callable) {
         Optional<Callable> existent = systemEnvironment.search(symbol);
         if (existent.isPresent()){
-            callables.put(symbol, callable);
-            throw new OverwriteSymbol("The Symbol: " + symbol.content() + ", has overwritten a builtin symbol.");
+            throw new UsedSymbol("The Symbol: " + symbol.content() + ", is a builtin symbol.");
         }
         existent = search(symbol);
         if (existent.isPresent())
