@@ -16,7 +16,7 @@ public class GreaterEqualsThan implements Callable {
     @Override
     public Expression execute(List<Expression> args) {
         if (args.size() != 2)
-            throw new InvalidCallableArgs("Operator = requires at exactly two Numeric args.");
+            throw new InvalidCallableArgs("Operator >= requires exactly two Numeric args.");
 
         boolean valueOfTruth = true;
         Expression subject = args.getFirst().evaluate();

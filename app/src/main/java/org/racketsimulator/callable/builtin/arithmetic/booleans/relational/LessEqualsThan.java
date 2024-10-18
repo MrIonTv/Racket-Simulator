@@ -16,17 +16,17 @@ public class LessEqualsThan implements Callable {
     @Override
     public Expression execute(List<Expression> args) {
         if (args.size() != 2)
-            throw new InvalidCallableArgs("Operator = requires at exactly two Numeric args.");
+            throw new InvalidCallableArgs("Operator <= requires exactly two Numeric args.");
 
         boolean valueOfTruth = true;
         Expression subject = args.getFirst().evaluate();
         if (!(subject instanceof Numeric))
-            throw new InvalidCallableArgs("Operator >= requires all of its args to be Numerical. Received: " +
+            throw new InvalidCallableArgs("Operator <= requires all of its args to be Numerical. Received: " +
                     subject.content() + ".");
 
         Expression tester = args.getLast().evaluate();
         if (!(tester instanceof Numeric))
-            throw new InvalidCallableArgs("Operator >= requires all of its args to be Numerical. Received: " +
+            throw new InvalidCallableArgs("Operator <= requires all of its args to be Numerical. Received: " +
                     tester.content() + ".");
 
         int subjectInt = Integer.parseInt(subject.content());
