@@ -1,6 +1,7 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+import org.racketsimulator.Configuration;
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.builtin.arithmetic.booleans.relational.LessThan;
@@ -82,8 +83,9 @@ public class LessThanTest {
     @Test
     public void testSExpressionEvaluation() {
         Callable greaterEquals = new LessThan();
-        Environment sourceEnv = new DefaultEnvironment();
-        Environment runtimeEnv = new DefaultEnvironment();
+        Configuration config = new Configuration();
+        Environment sourceEnv = config.source(config.sourceMap());
+        Environment runtimeEnv = config.runTime(sourceEnv);
 
         List<Expression> args = Arrays.asList(
                 new SExpression(List.of(new Numeric(5)), sourceEnv, runtimeEnv),
@@ -98,8 +100,9 @@ public class LessThanTest {
     @Test
     public void testNestedSExpressionEvaluation() {
         Callable greaterEquals = new LessThan();
-        Environment sourceEnv = new DefaultEnvironment();
-        Environment runtimeEnv = new DefaultEnvironment();
+        Configuration config = new Configuration();
+        Environment sourceEnv = config.source(config.sourceMap());
+        Environment runtimeEnv = config.runTime(sourceEnv);
 
         SExpression innerExpression = new SExpression(
                 List.of(new Numeric(-3)), sourceEnv, runtimeEnv);

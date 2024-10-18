@@ -1,6 +1,7 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+import org.racketsimulator.Configuration;
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.builtin.arithmetic.booleans.logical.Not;
@@ -65,8 +66,9 @@ public class NotTest {
     @Test
     public void testSExpressionEvaluation() {
         Callable notOperation = new Not();
-        Environment sourceEnv = new DefaultEnvironment();
-        Environment runtimeEnv = new DefaultEnvironment();
+        Configuration config = new Configuration();
+        Environment sourceEnv = config.source(config.sourceMap());
+        Environment runtimeEnv = config.runTime(sourceEnv);
 
         List<Expression> args = List.of(
                 new SExpression(List.of(new Symbol("#t")), sourceEnv, runtimeEnv)
@@ -80,8 +82,9 @@ public class NotTest {
     @Test
     public void testNestedSExpressionEvaluation() {
         Callable notOperation = new Not();
-        Environment sourceEnv = new DefaultEnvironment();
-        Environment runtimeEnv = new DefaultEnvironment();
+        Configuration config = new Configuration();
+        Environment sourceEnv = config.source(config.sourceMap());
+        Environment runtimeEnv = config.runTime(sourceEnv);
 
         // Nested SExpression (not (not #f)) -> should evaluate to #t
         SExpression innerNotExpression = new SExpression(

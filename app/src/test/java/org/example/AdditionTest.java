@@ -1,6 +1,7 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+import org.racketsimulator.Configuration;
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.builtin.arithmetic.numerical.Addition;
@@ -65,8 +66,9 @@ public class AdditionTest {
     @Test
     public void testSExpressionEvaluation() {
         Callable plus = new Addition();
-        Environment sourceEnv = new DefaultEnvironment();
-        Environment runtimeEnv = new DefaultEnvironment();
+        Configuration config = new Configuration();
+        Environment sourceEnv = config.source(config.sourceMap());
+        Environment runtimeEnv = config.runTime(sourceEnv);
 
         List<Expression> args = Arrays.asList(
                 new SExpression(List.of(new Numeric(8)), sourceEnv, runtimeEnv),
@@ -81,8 +83,9 @@ public class AdditionTest {
     @Test
     public void testNestedSExpressionEvaluation() {
         Callable plus = new Addition();
-        Environment sourceEnv = new DefaultEnvironment();
-        Environment runtimeEnv = new DefaultEnvironment();
+        Configuration config = new Configuration();
+        Environment sourceEnv = config.source(config.sourceMap());
+        Environment runtimeEnv = config.runTime(sourceEnv);
 
         // Nested SExpression: ((8)) should evaluate to 8
         SExpression innerExpression = new SExpression(

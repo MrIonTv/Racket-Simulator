@@ -15,8 +15,8 @@ public class DefaultEnvironment implements Environment{
         this.systemEnvironment = systemEnvironment;
     }
 
-    public DefaultEnvironment() {
-        this.callables = new HashMap<Symbol, Callable>();
+    public DefaultEnvironment(HashMap<Symbol, Callable> callables) {
+        this.callables = callables ;
         this.systemEnvironment = this;
     }
 
