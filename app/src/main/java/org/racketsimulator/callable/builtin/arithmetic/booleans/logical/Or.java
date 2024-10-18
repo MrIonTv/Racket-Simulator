@@ -18,7 +18,7 @@ public class Or implements Callable {
     @Override
     public Expression execute(List<Expression> args) {
         if (args.isEmpty())
-            throw new InvalidExpression("For OR operation is required one or more boolean arguments (#t/#f)");
+            throw new InvalidExpression("For OR operation is required one or more Symbols of type #t or #f.");
 
         boolean valueOfTruth = false;
         for (Expression arg : args) {
@@ -26,19 +26,19 @@ public class Or implements Callable {
                 var pivot = arg.evaluate();
                 if (pivot instanceof Symbol) {
                     if (!Objects.equals(pivot.content(), "#f") && !Objects.equals(pivot.content(), "#t"))
-                        throw new InvalidExpression("Expecting only booleans symbols for AND operation.");
+                        throw new InvalidExpression("Expecting only #t or #f symbols for OR operation.");
                     if (Objects.equals(pivot.content(), "#t"))
                         valueOfTruth = true;
                 } else {
-                    throw new InvalidExpression("Expecting only booleans symbols for AND operation.");
+                    throw new InvalidExpression("Expecting only #t or #f symbols for OR operation.");
                 }
             } else if (arg instanceof Symbol) {
                 if (!Objects.equals(arg.content(), "#f") && !Objects.equals(arg.content(), "#t"))
-                    throw new InvalidExpression("Expecting only booleans symbols for AND operation.");
+                    throw new InvalidExpression("Expecting only #t or #f symbols for OR operation.");
                 if (Objects.equals(arg.content(), "#t"))
                     valueOfTruth = true;
             } else {
-                throw new InvalidExpression("Expecting only booleans symbols for AND operation.");
+                throw new InvalidExpression("Expecting only #t or #f symbols for OR operation.");
             }
         }
 
