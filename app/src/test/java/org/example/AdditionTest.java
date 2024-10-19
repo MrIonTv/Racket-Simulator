@@ -18,7 +18,7 @@ public class AdditionTest {
 
     @Test
     public void testSingleNumericArgument() {
-        Callable plus = new Addition();
+        Callable plus = new Addition(new DefaultEnvironment());
         List<Expression> args = List.of(new Numeric(5));
 
         Expression result = plus.execute(args);
@@ -28,7 +28,7 @@ public class AdditionTest {
 
     @Test
     public void testMultipleNumericArguments() {
-        Callable plus = new Addition();
+        Callable plus = new Addition(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Numeric(3),
@@ -42,7 +42,7 @@ public class AdditionTest {
 
     @Test
     public void testNonNumericArgument() {
-        Callable plus = new Addition();
+        Callable plus = new Addition(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Symbol("#t")
@@ -55,7 +55,7 @@ public class AdditionTest {
 
     @Test
     public void testEmptyArgumentList() {
-        Callable plus = new Addition();
+        Callable plus = new Addition(new DefaultEnvironment());
         List<Expression> args = List.of();
 
         assertThrows(InvalidCallableArgs.class, () -> {
@@ -65,13 +65,13 @@ public class AdditionTest {
 
     @Test
     public void testSExpressionEvaluation() {
-        Callable plus = new Addition();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source(config.sourceMap());
+        Environment sourceEnv = config.source();
         Environment runtimeEnv = config.runTime(sourceEnv);
+        Callable plus = new Addition(runtimeEnv);
 
         List<Expression> args = Arrays.asList(
-                new SExpression(List.of(new Numeric(8)), sourceEnv, runtimeEnv),
+                new SExpression(List.of(new Numeric(8)), runtimeEnv),
                 new Numeric(5)
         );
 
@@ -82,16 +82,16 @@ public class AdditionTest {
 
     @Test
     public void testNestedSExpressionEvaluation() {
-        Callable plus = new Addition();
+        Callable plus = new Addition(new DefaultEnvironment());
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source(config.sourceMap());
+        Environment sourceEnv = config.source();
         Environment runtimeEnv = config.runTime(sourceEnv);
 
         // Nested SExpression: ((8)) should evaluate to 8
         SExpression innerExpression = new SExpression(
-                List.of(new Numeric(8)), sourceEnv, runtimeEnv);
+                List.of(new Numeric(8)), runtimeEnv);
         SExpression outerExpression = new SExpression(
-                List.of(innerExpression), sourceEnv, runtimeEnv);
+                List.of(innerExpression), runtimeEnv);
 
         List<Expression> args = Arrays.asList(
                 outerExpression,

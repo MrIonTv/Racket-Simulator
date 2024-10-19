@@ -79,11 +79,11 @@ public class EqualsTest {
     public void testSExpressionEvaluation() {
         Callable equalsOperation = new Equals();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source(config.sourceMap());
+        Environment sourceEnv = config.source();
         Environment runtimeEnv = config.runTime(sourceEnv);
 
         List<Expression> args = Arrays.asList(
-                new SExpression(List.of(new Numeric(5)), sourceEnv, runtimeEnv),
+                new SExpression(List.of(new Numeric(5)), runtimeEnv),
                 new Numeric(5)
         );
 
@@ -96,13 +96,13 @@ public class EqualsTest {
     public void testNestedSExpressionEvaluation() {
         Callable equalsOperation = new Equals();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source(config.sourceMap());
+        Environment sourceEnv = config.source();
         Environment runtimeEnv = config.runTime(sourceEnv);
 
         SExpression innerExpression = new SExpression(
-                List.of(new Numeric(5)), sourceEnv, runtimeEnv);
+                List.of(new Numeric(5)), runtimeEnv);
         SExpression outerExpression = new SExpression(
-                List.of(innerExpression), sourceEnv, runtimeEnv);
+                List.of(innerExpression), runtimeEnv);
 
         List<Expression> args = Arrays.asList(
                 outerExpression,

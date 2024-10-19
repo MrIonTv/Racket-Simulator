@@ -3,6 +3,7 @@ package org.example;
 import org.junit.jupiter.api.Test;
 import org.racketsimulator.Configuration;
 import org.racketsimulator.callable.Callable;
+import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.builtin.arithmetic.booleans.logical.And;
 import org.racketsimulator.environment.DefaultEnvironment;
 import org.racketsimulator.environment.Environment;
@@ -62,7 +63,7 @@ public class AndTest {
                 new Numeric(1)
         );
 
-        assertThrows(InvalidExpression.class, () -> {
+        assertThrows(InvalidCallableArgs.class, () -> {
             andOperation.execute(args);
         }, "An exception should be thrown when a non-boolean argument is passed.");
     }
@@ -71,7 +72,7 @@ public class AndTest {
     public void testEmptyArguments() {
         Callable andOperation = new And();
 
-        assertThrows(InvalidExpression.class, () -> {
+        assertThrows(InvalidCallableArgs.class, () -> {
             andOperation.execute(List.of());
         }, "An exception should be thrown when no arguments are passed.");
     }
@@ -80,11 +81,11 @@ public class AndTest {
     public void testSExpressionEvaluation() {
         Callable andOperation = new And();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source(config.sourceMap());
+        Environment sourceEnv = config.source();
         Environment runtimeEnv = config.runTime(sourceEnv);
 
         List<Expression> args = Arrays.asList(
-                new SExpression(List.of(new Symbol("#t")), sourceEnv, runtimeEnv),
+                new SExpression(List.of(new Symbol("#t")), runtimeEnv),
                 new Symbol("#f")
         );
 

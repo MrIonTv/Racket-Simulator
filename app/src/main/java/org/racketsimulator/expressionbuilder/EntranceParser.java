@@ -8,23 +8,21 @@ import org.racketsimulator.expression.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class EntranceParser implements ExpressionBuilder {
-    private static final String OPEN = "(";
-    private static final String CLOSE = ")";
-    private static final String SPACE = " ";
+public class EntranceParser extends GeneralParser {
     private static final Character SUGAR = '\'';
     private static final String SUGAR_REPLACEMENT = "(quote ";
     private final Environment source;
     private final Environment runtime;
 
     public EntranceParser(Environment runtime, Environment source) {
+        super(runtime);
         this.source = source;
         this.runtime = runtime;
     }
 
     /**
-     * @param sentence 
-     * @return
+     * @param sentence The call to be parsed into an Expression.
+     * @return a prepared Expression based on the arguments.
      */
     @Override
     public Expression build(final String sentence) {
@@ -78,15 +76,6 @@ public class EntranceParser implements ExpressionBuilder {
         return result.toString();
     }
 
-    private List<String> tokenise(String cleaned) {
-        return Arrays.stream(
-                cleaned.replace(OPEN, SPACE + OPEN + SPACE)
-                .replace(CLOSE, SPACE + CLOSE + SPACE)
-                .split("\\s+"))
-                .filter(s -> !s.isBlank())
-                .collect(Collectors.toList());
-    }
-
     private Expression parse(List<String> tokens) {
         Iterator<String> iterator = tokens.iterator();
         return readFromTokens(iterator);
@@ -104,7 +93,7 @@ public class EntranceParser implements ExpressionBuilder {
                 case CLOSE:
                     if (expressions.isEmpty())
                         return new Empty();
-                    return new SExpression(expressions, source, runtime);
+                    return new SExpression(expressions, runtime);
 
                 default:
                     expressions.add(evalToken(token));
@@ -114,20 +103,5 @@ public class EntranceParser implements ExpressionBuilder {
         if (expressions.isEmpty())
             return new Empty();
         return expressions.getFirst();
-    }
-
-    private Expression evalToken(String token) {
-        if (token.isEmpty())
-            return new Empty();
-        if (token.matches("-?\\d+"))
-            return new Numeric(Integer.parseInt(token));
-        return evalSymbol(new Symbol(token));
-    }
-
-    private Expression evalSymbol(Symbol token) {
-        Optional<Callable> value = runtime.search(token);
-        if (value.isEmpty())
-            return token;
-        return new Symbol(value.get().execute(new ArrayList<>()).content());
     }
 }

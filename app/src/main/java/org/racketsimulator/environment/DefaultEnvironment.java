@@ -7,16 +7,16 @@ import java.util.HashMap;
 import java.util.Optional;
 
 public class DefaultEnvironment implements Environment{
-    private final HashMap<Symbol, Callable> callables;
+    private final HashMap<String, Callable> callables;
     private final Environment systemEnvironment;
 
-    public DefaultEnvironment(HashMap<Symbol, Callable> callables, Environment systemEnvironment) {
-        this.callables = callables;
+    public DefaultEnvironment(Environment systemEnvironment) {
+        this.callables = new HashMap<>();
         this.systemEnvironment = systemEnvironment;
     }
 
-    public DefaultEnvironment(HashMap<Symbol, Callable> callables) {
-        this.callables = callables ;
+    public DefaultEnvironment() {
+        this.callables = new HashMap<>();
         this.systemEnvironment = this;
     }
 
@@ -34,7 +34,7 @@ public class DefaultEnvironment implements Environment{
         if (existent.isPresent())
             throw new UsedSymbol("The Symbol: " + symbol.content() + ", has already been defined.");
 
-        callables.put(symbol, callable);
+        callables.put(symbol.content(), callable);
     }
 
     /**
@@ -43,9 +43,12 @@ public class DefaultEnvironment implements Environment{
      */
     @Override
     public Optional<Callable> search(Symbol symbol) {
-        Callable result = callables.getOrDefault(symbol, null);
+        String key = symbol.content();
+        Callable result = callables.getOrDefault(key, null);
         if (result != null)
             return Optional.of(result);
+        if (systemEnvironment != this)
+            return systemEnvironment.search(symbol);
         return Optional.empty();
     }
 }

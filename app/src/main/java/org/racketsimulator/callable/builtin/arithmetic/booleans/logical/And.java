@@ -1,6 +1,7 @@
 package org.racketsimulator.callable.builtin.arithmetic.booleans.logical;
 
 import org.racketsimulator.callable.Callable;
+import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.expression.*;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class And implements Callable {
     @Override
     public Expression execute(List<Expression> args) {
         if (args.isEmpty())
-            throw new InvalidExpression("For AND operation is required one or more Symbols of type #t or #f");
+            throw new InvalidCallableArgs("For AND operation is required one or more Symbols of type #t or #f");
 
         boolean valueOfTruth = true;
         for (Expression arg : args) {
@@ -22,19 +23,19 @@ public class And implements Callable {
                 var pivot = arg.evaluate();
                 if (pivot instanceof Symbol) {
                     if (!Objects.equals(pivot.content(), "#f") && !Objects.equals(pivot.content(), "#t"))
-                        throw new InvalidExpression("Expecting only #t or #f symbols for AND operation.");
+                        throw new InvalidCallableArgs("Expecting only #t or #f symbols for AND operation.");
                     if (Objects.equals(pivot.content(), "#f"))
                         valueOfTruth = false;
                 } else {
-                    throw new InvalidExpression("Expecting only #t or #f symbols for AND operation.");
+                    throw new InvalidCallableArgs("Expecting only #t or #f symbols for AND operation.");
                 }
             } else if (arg instanceof Symbol) {
                 if (!Objects.equals(arg.content(), "#f") && !Objects.equals(arg.content(), "#t"))
-                    throw new InvalidExpression("Expecting only #t or #f symbols for AND operation.");
+                    throw new InvalidCallableArgs("Expecting only #t or #f symbols for AND operation.");
                 if (Objects.equals(arg.content(), "#f"))
                     valueOfTruth = false;
             } else {
-                throw new InvalidExpression("Expecting only #t or #f symbols for AND operation.");
+                throw new InvalidCallableArgs("Expecting only #t or #f symbols for AND operation.");
             }
         }
 

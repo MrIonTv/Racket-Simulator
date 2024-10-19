@@ -1,8 +1,6 @@
 package org.racketsimulator.callable;
 
-import org.racketsimulator.expression.Expression;
-import org.racketsimulator.expression.QExpression;
-import org.racketsimulator.expression.Symbol;
+import org.racketsimulator.expression.*;
 
 import java.util.List;
 
@@ -22,7 +20,12 @@ public class DefinedCallable implements Callable{
         if (!args.isEmpty())
             throw new InvalidCallableArgs("DefinedCallable requires exactly 0 args");
 
-        final List<Expression> body = List.of(new Symbol(this.body));
-        return new QExpression(body);
+        /*
+        if (this.body.isEmpty())
+            return new Empty();
+        if (this.body.matches("-?\\d+"))
+            return new Numeric(Integer.parseInt(this.body));
+        */
+        return new Symbol(this.body);
     }
 }
