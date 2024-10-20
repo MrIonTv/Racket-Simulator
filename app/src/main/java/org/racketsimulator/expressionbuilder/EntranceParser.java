@@ -11,12 +11,10 @@ import java.util.stream.Collectors;
 public class EntranceParser extends GeneralParser {
     private static final Character SUGAR = '\'';
     private static final String SUGAR_REPLACEMENT = "(quote ";
-    private final Environment source;
     private final Environment runtime;
 
-    public EntranceParser(Environment runtime, Environment source) {
+    public EntranceParser(Environment runtime) {
         super(runtime);
-        this.source = source;
         this.runtime = runtime;
     }
 

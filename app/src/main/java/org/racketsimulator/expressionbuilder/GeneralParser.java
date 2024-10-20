@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class GeneralParser implements ExpressionBuilder{
+public abstract class GeneralParser implements ExpressionBuilder{
     protected static final String OPEN = "(";
     protected static final String CLOSE = ")";
     protected static final String SPACE = " ";

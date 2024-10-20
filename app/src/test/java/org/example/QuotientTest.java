@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.racketsimulator.Configuration;
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
+import org.racketsimulator.callable.builtin.arithmetic.booleans.relational.Equals;
 import org.racketsimulator.callable.builtin.arithmetic.numerical.Quotient;
 import org.racketsimulator.expression.*;
 import org.racketsimulator.environment.DefaultEnvironment;
@@ -18,7 +19,7 @@ public class QuotientTest {
 
     @Test
     public void testSingleNumericArgument() {
-        Callable plus = new Quotient();
+        Callable plus = new Quotient(new DefaultEnvironment());
         List<Expression> args = List.of(new Numeric(5));
 
         Expression result = plus.execute(args);
@@ -28,7 +29,7 @@ public class QuotientTest {
 
     @Test
     public void testMultipleNumericArguments() {
-        Callable plus = new Quotient();
+        Callable plus = new Quotient(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(6),
                 new Numeric(3),
@@ -42,7 +43,7 @@ public class QuotientTest {
 
     @Test
     public void testNonNumericArgument() {
-        Callable plus = new Quotient();
+        Callable plus = new Quotient(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Symbol("#t")
@@ -55,7 +56,7 @@ public class QuotientTest {
 
     @Test
     public void testEmptyArgumentList() {
-        Callable plus = new Quotient();
+        Callable plus = new Quotient(new DefaultEnvironment());
         List<Expression> args = List.of();
 
         assertThrows(InvalidCallableArgs.class, () -> {
@@ -65,27 +66,25 @@ public class QuotientTest {
 
     @Test
     public void testSExpressionEvaluation() {
-        Callable plus = new Quotient();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
+        Callable quotient = new Quotient(runtimeEnv);
 
         List<Expression> args = Arrays.asList(
                 new SExpression(List.of(new Numeric(8)), runtimeEnv),
                 new Numeric(5)
         );
 
-        Expression result = plus.execute(args);
+        Expression result = quotient.execute(args);
         assertInstanceOf(Numeric.class, result);
         assertEquals("1", result.content(), "The result should be 1 when the first evaluated SExpression is 8 and the second number is 5.");
     }
 
     @Test
     public void testNestedSExpressionEvaluation() {
-        Callable plus = new Quotient();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
+        Callable quotient = new Quotient(runtimeEnv);
 
         SExpression innerExpression = new SExpression(
                 List.of(new Numeric(8)), runtimeEnv);
@@ -97,7 +96,7 @@ public class QuotientTest {
                 new Numeric(2)
         );
 
-        Expression result = plus.execute(args);
+        Expression result = quotient.execute(args);
         assertInstanceOf(Numeric.class, result);
         assertEquals("4", result.content(), "The result should be 4 when nested SExpressions evaluate to 8 and another argument is 2.");
     }

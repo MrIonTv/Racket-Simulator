@@ -5,6 +5,7 @@ import org.racketsimulator.Configuration;
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.builtin.arithmetic.booleans.logical.And;
+import org.racketsimulator.callable.builtin.arithmetic.numerical.Addition;
 import org.racketsimulator.environment.DefaultEnvironment;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
@@ -81,8 +82,7 @@ public class AndTest {
     public void testSExpressionEvaluation() {
         Callable andOperation = new And();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
 
         List<Expression> args = Arrays.asList(
                 new SExpression(List.of(new Symbol("#t")), runtimeEnv),

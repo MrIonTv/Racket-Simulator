@@ -67,8 +67,7 @@ public class NotTest {
     public void testSExpressionEvaluation() {
         Callable notOperation = new Not();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
 
         List<Expression> args = List.of(
                 new SExpression(List.of(new Symbol("#t")), runtimeEnv)
@@ -83,8 +82,7 @@ public class NotTest {
     public void testNestedSExpressionEvaluation() {
         Callable notOperation = new Not();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
 
         // Nested SExpression (not (not #f)) -> should evaluate to #t
         SExpression innerNotExpression = new SExpression(

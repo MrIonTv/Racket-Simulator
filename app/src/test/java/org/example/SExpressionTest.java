@@ -5,27 +5,23 @@ import org.junit.jupiter.api.Test;
 import org.racketsimulator.Configuration;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
-import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.DefinedCallable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SExpressionTest {
-    private Environment source;
     private Environment runtime;
 
     @BeforeEach
     void setUp() {
         Configuration config = new Configuration();
-        source = config.source();
-        runtime = config.runTime(source);
-        runtime.defineSymbol(new Symbol("nine"), new DefinedCallable("9"));
-        runtime.defineSymbol(new Symbol("OPERATION"), new DefinedCallable("+ nine 1"));
+        runtime = config.runTime();
+        runtime.defineSymbol(new Symbol("nine"), new DefinedCallable(runtime, "9"));
+        runtime.defineSymbol(new Symbol("OPERATION"), new DefinedCallable(runtime, "+ nine 1"));
     }
 
     @Test
@@ -140,5 +136,19 @@ class SExpressionTest {
         Expression result = sExpression.evaluate();
         assertInstanceOf(Numeric.class, result);
         assertEquals("10", result.content()); // Verificamos que el contenido sea "9"
+    }
+
+    @Test
+    void testComplexEvaluation() {
+        Expression s1 = new Symbol("/");
+        Expression s2 = new Symbol("OPERATION");
+        Expression s3 = new Numeric(2);
+
+        List<Expression> values = new ArrayList<>(List.of(s1, s2, s3));
+        SExpression sExpression = new SExpression(values, runtime);
+
+        Expression result = sExpression.evaluate();
+        assertInstanceOf(Numeric.class, result);
+        assertEquals("5", result.content());
     }
 }

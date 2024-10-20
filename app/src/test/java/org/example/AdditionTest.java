@@ -18,74 +18,72 @@ public class AdditionTest {
 
     @Test
     public void testSingleNumericArgument() {
-        Callable plus = new Addition(new DefaultEnvironment());
+        Callable callable = new Addition(new DefaultEnvironment());
         List<Expression> args = List.of(new Numeric(5));
 
-        Expression result = plus.execute(args);
+        Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
         assertEquals("5", result.content(), "The result should be 5 when only one number is provided.");
     }
 
     @Test
     public void testMultipleNumericArguments() {
-        Callable plus = new Addition(new DefaultEnvironment());
+        Callable callable = new Addition(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Numeric(3),
                 new Numeric(2)
         );
 
-        Expression result = plus.execute(args);
+        Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
         assertEquals("10", result.content(), "The result should be 10 for 5 + 3 + 2.");
     }
 
     @Test
     public void testNonNumericArgument() {
-        Callable plus = new Addition(new DefaultEnvironment());
+        Callable callable = new Addition(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Symbol("#t")
         );
 
         assertThrows(InvalidCallableArgs.class, () -> {
-            plus.execute(args);
+            callable.execute(args);
         }, "An exception should be thrown when a non-numeric argument is passed.");
     }
 
     @Test
     public void testEmptyArgumentList() {
-        Callable plus = new Addition(new DefaultEnvironment());
+        Callable callable = new Addition(new DefaultEnvironment());
         List<Expression> args = List.of();
 
         assertThrows(InvalidCallableArgs.class, () -> {
-            plus.execute(args);
+            callable.execute(args);
         }, "An exception should be thrown when no arguments are passed.");
     }
 
     @Test
     public void testSExpressionEvaluation() {
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
-        Callable plus = new Addition(runtimeEnv);
+        Environment runtimeEnv = config.runTime();
+        Callable callable = new Addition(runtimeEnv);
 
         List<Expression> args = Arrays.asList(
                 new SExpression(List.of(new Numeric(8)), runtimeEnv),
                 new Numeric(5)
         );
 
-        Expression result = plus.execute(args);
+        Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
         assertEquals("13", result.content(), "The result should be 13 when the first evaluated SExpression is 8 and the second number is 5.");
     }
 
     @Test
     public void testNestedSExpressionEvaluation() {
-        Callable plus = new Addition(new DefaultEnvironment());
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
+        Callable callable = new Addition(runtimeEnv);
 
         // Nested SExpression: ((8)) should evaluate to 8
         SExpression innerExpression = new SExpression(
@@ -98,7 +96,7 @@ public class AdditionTest {
                 new Numeric(2)
         );
 
-        Expression result = plus.execute(args);
+        Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
         assertEquals("10", result.content(), "The result should be 10 when nested SExpressions evaluate to 8 and another argument is 2.");
     }

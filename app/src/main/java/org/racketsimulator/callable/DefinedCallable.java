@@ -1,13 +1,15 @@
 package org.racketsimulator.callable;
 
+import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 
 import java.util.List;
 
-public class DefinedCallable implements Callable{
+public class DefinedCallable extends DefaultCallable {
     private final String body;
 
-    public DefinedCallable(String body) {
+    public DefinedCallable(Environment runtime, String body) {
+        super(runtime);
         this.body = body;
     }
 
@@ -20,12 +22,6 @@ public class DefinedCallable implements Callable{
         if (!args.isEmpty())
             throw new InvalidCallableArgs("DefinedCallable requires exactly 0 args");
 
-        /*
-        if (this.body.isEmpty())
-            return new Empty();
-        if (this.body.matches("-?\\d+"))
-            return new Numeric(Integer.parseInt(this.body));
-        */
         return new Symbol(this.body);
     }
 }

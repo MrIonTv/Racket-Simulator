@@ -4,11 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.racketsimulator.Configuration;
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
+import org.racketsimulator.callable.builtin.arithmetic.booleans.relational.Equals;
 import org.racketsimulator.callable.builtin.arithmetic.booleans.relational.LessThan;
-import org.racketsimulator.expression.Expression;
-import org.racketsimulator.expression.Numeric;
-import org.racketsimulator.expression.SExpression;
-import org.racketsimulator.expression.Symbol;
+import org.racketsimulator.expression.*;
 import org.racketsimulator.environment.DefaultEnvironment;
 import org.racketsimulator.environment.Environment;
 
@@ -20,7 +18,7 @@ public class LessThanTest {
 
     @Test
     public void testGreaterThan() {
-        Callable greaterEquals = new LessThan();
+        Callable greaterEquals = new LessThan(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(7),
                 new Numeric(5)
@@ -33,7 +31,7 @@ public class LessThanTest {
 
     @Test
     public void testEquals() {
-        Callable greaterEquals = new LessThan();
+        Callable greaterEquals = new LessThan(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Numeric(5)
@@ -46,7 +44,7 @@ public class LessThanTest {
 
     @Test
     public void testLessThan() {
-        Callable greaterEquals = new LessThan();
+        Callable greaterEquals = new LessThan(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(3),
                 new Numeric(5)
@@ -59,10 +57,10 @@ public class LessThanTest {
 
     @Test
     public void testNonNumericArgument() {
-        Callable greaterEquals = new LessThan();
+        Callable greaterEquals = new LessThan(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(7),
-                new Symbol("#t")
+                new QExpression(List.of(new Symbol("#t")))
         );
 
         assertThrows(InvalidCallableArgs.class, () -> {
@@ -72,7 +70,7 @@ public class LessThanTest {
 
     @Test
     public void testInvalidArgumentCount() {
-        Callable greaterEquals = new LessThan();
+        Callable greaterEquals = new LessThan(new DefaultEnvironment());
         List<Expression> args = List.of(new Numeric(7));
 
         assertThrows(InvalidCallableArgs.class, () -> {
@@ -82,27 +80,25 @@ public class LessThanTest {
 
     @Test
     public void testSExpressionEvaluation() {
-        Callable greaterEquals = new LessThan();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
+        Callable lessThan = new LessThan(runtimeEnv);
 
         List<Expression> args = Arrays.asList(
                 new SExpression(List.of(new Numeric(5)), runtimeEnv),
                 new Numeric(5)
         );
 
-        Expression result = greaterEquals.execute(args);
+        Expression result = lessThan.execute(args);
         assertInstanceOf(Symbol.class, result);
         assertEquals("#f", result.content(), "The result should be #t when the first evaluated SExpression is greater than the second.");
     }
 
     @Test
     public void testNestedSExpressionEvaluation() {
-        Callable greaterEquals = new LessThan();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
+        Callable lessThan = new LessThan(runtimeEnv);
 
         SExpression innerExpression = new SExpression(
                 List.of(new Numeric(-3)), runtimeEnv);
@@ -114,7 +110,7 @@ public class LessThanTest {
                 new Numeric(8)
         );
 
-        Expression result = greaterEquals.execute(args);
+        Expression result = lessThan.execute(args);
         assertInstanceOf(Symbol.class, result);
         assertEquals("#t", result.content(), "The result should be #t when nested SExpressions evaluate to equal values.");
     }

@@ -81,8 +81,7 @@ public class OrTest {
     public void testSExpressionEvaluation() {
         Callable orOperation = new Or();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
 
         List<Expression> args = Arrays.asList(
                 new SExpression(List.of(new Symbol("#f")), runtimeEnv),

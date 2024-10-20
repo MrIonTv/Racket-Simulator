@@ -17,38 +17,34 @@ import java.util.HashMap;
 
 public class Configuration {
     public ExpressionBuilder entranceParser() {
-        Environment source = source();
-        return new EntranceParser(runTime(source), source);
+        Environment runtime = runTime();
+        return new EntranceParser(runtime);
     }
 
-    public Environment source() {
-        Environment source = new DefaultEnvironment();
-        sourceMap(source);
-        return source;
+    public Environment runTime() {
+        Environment runtime = new DefaultEnvironment();
+        loadSourceMap(runtime);
+        return runtime;
     }
 
-    public Environment runTime(Environment source) {
-        return new DefaultEnvironment(source);
-    }
+    public void loadSourceMap(Environment runtime) {
+            runtime.defineSymbol(new Symbol("+"), new Addition(runtime));
+            runtime.defineSymbol(new Symbol("-"), new Subtraction(runtime));
+            runtime.defineSymbol(new Symbol("*"), new Multiplication(runtime));
+            runtime.defineSymbol(new Symbol("/"), new Quotient(runtime));
+            runtime.defineSymbol(new Symbol("%"), new Remainder(runtime));
+            runtime.defineSymbol(new Symbol("="), new Equals(runtime));
+            runtime.defineSymbol(new Symbol(">="), new GreaterEqualsThan(runtime));
+            runtime.defineSymbol(new Symbol(">"), new GreaterThan(runtime));
+            runtime.defineSymbol(new Symbol("<"), new LessThan(runtime));
+            runtime.defineSymbol(new Symbol("<="), new LessEqualsThan(runtime));
 
-    public void sourceMap(Environment source) {
-            source.defineSymbol(new Symbol("+"), new Addition(source));
-            source.defineSymbol(new Symbol("-"), new Subtraction());
-            source.defineSymbol(new Symbol("*"), new Multiplication());
-            source.defineSymbol(new Symbol("/"), new Quotient());
-            source.defineSymbol(new Symbol("%"), new Remainder());
-            source.defineSymbol(new Symbol("="), new Equals());
-            source.defineSymbol(new Symbol(">="), new GreaterEqualsThan());
-            source.defineSymbol(new Symbol(">"), new GreaterThan());
-            source.defineSymbol(new Symbol("<"), new LessThan());
-            source.defineSymbol(new Symbol("<="), new LessEqualsThan());
+            runtime.defineSymbol(new Symbol("AND"), new And());
+            runtime.defineSymbol(new Symbol("OR"), new Or());
+            runtime.defineSymbol(new Symbol("NOT"), new Not());
 
-            source.defineSymbol(new Symbol("AND"), new And());
-            source.defineSymbol(new Symbol("OR"), new Or());
-            source.defineSymbol(new Symbol("NOT"), new Not());
-
-            source.defineSymbol(new Symbol("#t"), new SelfCallable(new Symbol("#t")));
-            source.defineSymbol(new Symbol("#f"), new SelfCallable(new Symbol("#f")));
+            runtime.defineSymbol(new Symbol("#t"), new SelfCallable(new Symbol("#t")));
+            runtime.defineSymbol(new Symbol("#f"), new SelfCallable(new Symbol("#f")));
     }
     //TODO
     public HashMap<String, Callable> runTimeMap() {

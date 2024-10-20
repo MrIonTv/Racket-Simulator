@@ -5,6 +5,7 @@ import org.racketsimulator.Configuration;
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.builtin.arithmetic.booleans.relational.Equals;
+import org.racketsimulator.callable.builtin.arithmetic.numerical.Addition;
 import org.racketsimulator.expression.*;
 import org.racketsimulator.environment.DefaultEnvironment;
 import org.racketsimulator.environment.Environment;
@@ -17,7 +18,7 @@ public class EqualsTest {
 
     @Test
     public void testEqualNumbers() {
-        Callable equalsOperation = new Equals();
+        Callable equalsOperation = new Equals(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Numeric(5),
@@ -31,7 +32,7 @@ public class EqualsTest {
 
     @Test
     public void testDifferentNumbers() {
-        Callable equalsOperation = new Equals();
+        Callable equalsOperation = new Equals(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Numeric(6),
@@ -45,7 +46,7 @@ public class EqualsTest {
 
     @Test
     public void testSingleArgument() {
-        Callable equalsOperation = new Equals();
+        Callable equalsOperation = new Equals(new DefaultEnvironment());
         List<Expression> args = List.of(new Numeric(7));
 
         Expression result = equalsOperation.execute(args);
@@ -55,7 +56,7 @@ public class EqualsTest {
 
     @Test
     public void testNonNumericArgument() {
-        Callable equalsOperation = new Equals();
+        Callable equalsOperation = new Equals(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(5),
                 new Symbol("#t")
@@ -68,7 +69,7 @@ public class EqualsTest {
 
     @Test
     public void testEmptyArguments() {
-        Callable equalsOperation = new Equals();
+        Callable equalsOperation = new Equals(new DefaultEnvironment());
 
         assertThrows(InvalidCallableArgs.class, () -> {
             equalsOperation.execute(List.of());
@@ -77,10 +78,9 @@ public class EqualsTest {
 
     @Test
     public void testSExpressionEvaluation() {
-        Callable equalsOperation = new Equals();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
+        Callable equalsOperation = new Equals(runtimeEnv);
 
         List<Expression> args = Arrays.asList(
                 new SExpression(List.of(new Numeric(5)), runtimeEnv),
@@ -94,10 +94,9 @@ public class EqualsTest {
 
     @Test
     public void testNestedSExpressionEvaluation() {
-        Callable equalsOperation = new Equals();
         Configuration config = new Configuration();
-        Environment sourceEnv = config.source();
-        Environment runtimeEnv = config.runTime(sourceEnv);
+        Environment runtimeEnv = config.runTime();
+        Callable equalsOperation = new Equals(runtimeEnv);
 
         SExpression innerExpression = new SExpression(
                 List.of(new Numeric(5)), runtimeEnv);
