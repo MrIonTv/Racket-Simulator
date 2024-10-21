@@ -1,21 +1,16 @@
 package org.racketsimulator.expressionbuilder;
 
-import org.racketsimulator.callable.Callable;
-import org.racketsimulator.callable.DefinedCallable;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
-public class EntranceParser extends GeneralParser {
+public class StringParser extends DefaultParser {
     private static final Character SUGAR = '\'';
     private static final String SUGAR_REPLACEMENT = "(quote ";
-    private final Environment runtime;
 
-    public EntranceParser(Environment runtime) {
+    public StringParser(Environment runtime) {
         super(runtime);
-        this.runtime = runtime;
     }
 
     /**
@@ -91,7 +86,7 @@ public class EntranceParser extends GeneralParser {
                 case CLOSE:
                     if (expressions.isEmpty())
                         return new Empty();
-                    return new SExpression(expressions, runtime);
+                    return new SExpression(expressions, super.runtime);
 
                 default:
                     expressions.add(evalToken(token));

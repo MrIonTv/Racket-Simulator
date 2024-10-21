@@ -1,11 +1,12 @@
-package org.racketsimulator.callable;
+package org.racketsimulator.callable.builtin;
 
+import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 
 import java.util.List;
 
-public class DefinedCallable extends DefaultCallable {
+public class DefinedCallable extends BuiltinCallable {
     private final String body;
 
     public DefinedCallable(Environment runtime, String body) {

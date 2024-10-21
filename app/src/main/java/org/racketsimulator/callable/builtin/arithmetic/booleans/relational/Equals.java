@@ -1,6 +1,6 @@
 package org.racketsimulator.callable.builtin.arithmetic.booleans.relational;
 
-import org.racketsimulator.callable.DefaultCallable;
+import org.racketsimulator.callable.builtin.BuiltinCallable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.Expression;
@@ -9,7 +9,7 @@ import org.racketsimulator.expression.Symbol;
 
 import java.util.List;
 
-public class Equals extends DefaultCallable {
+public class Equals extends BuiltinCallable {
     public Equals(Environment runtime) {
         super(runtime);
     }

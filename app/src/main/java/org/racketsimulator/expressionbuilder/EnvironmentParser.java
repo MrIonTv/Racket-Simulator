@@ -1,20 +1,16 @@
 package org.racketsimulator.expressionbuilder;
 
-import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
-public class EnvironmentBuilder extends GeneralParser {
+public class EnvironmentParser extends DefaultParser {
     private final List<Expression> args;
 
-    public EnvironmentBuilder(List<Expression> args, Environment runtime) {
+    public EnvironmentParser(List<Expression> args, Environment runtime) {
         super(runtime);
         this.args = args;
     }

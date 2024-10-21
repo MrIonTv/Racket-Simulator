@@ -1,6 +1,6 @@
 package org.racketsimulator.callable.builtin.arithmetic.numerical;
 
-import org.racketsimulator.callable.DefaultCallable;
+import org.racketsimulator.callable.builtin.BuiltinCallable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.Expression;
@@ -9,7 +9,7 @@ import org.racketsimulator.expression.Symbol;
 
 import java.util.List;
 
-public class Subtraction extends DefaultCallable {
+public class Subtraction extends BuiltinCallable {
     public Subtraction(Environment runtime) {
         super(runtime);
     }

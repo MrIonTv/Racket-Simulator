@@ -3,17 +3,12 @@ package org.example;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.racketsimulator.Configuration;
-import org.racketsimulator.environment.DefaultEnvironment;
-import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
-import org.racketsimulator.expressionbuilder.EntranceParser;
 import org.racketsimulator.expressionbuilder.ExpressionBuilder;
-
-import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class EntranceParserTest {
+public class StringParserTest {
 
     private ExpressionBuilder parser;
 
@@ -44,7 +39,7 @@ public class EntranceParserTest {
 
     @Test
     public void testSimpleSExpression() {
-        String input = "(x 42)";
+        String input = "(+ 42)";
         Expression result = parser.build(input);
 
         assertInstanceOf(SExpression.class, result);

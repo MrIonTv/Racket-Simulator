@@ -1,17 +1,18 @@
-package org.racketsimulator.callable;
+package org.racketsimulator.callable.builtin;
 
+import org.racketsimulator.callable.Callable;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
-import org.racketsimulator.expressionbuilder.EnvironmentBuilder;
+import org.racketsimulator.expressionbuilder.EnvironmentParser;
 import org.racketsimulator.expressionbuilder.ExpressionBuilder;
 
 import java.util.List;
 import java.util.Optional;
 
-public abstract class DefaultCallable implements Callable {
+public abstract class BuiltinCallable implements Callable {
     private final Environment runtime;
 
-    public DefaultCallable(Environment runtime) {
+    public BuiltinCallable(Environment runtime) {
         this.runtime = runtime;
     }
 
@@ -41,7 +42,7 @@ public abstract class DefaultCallable implements Callable {
 
         Optional<Callable> callable = runtime.search((Symbol) symbol);
         if (callable.isPresent()) {
-            ExpressionBuilder builder = new EnvironmentBuilder(List.of(), runtime);
+            ExpressionBuilder builder = new EnvironmentParser(List.of(), runtime);
             Expression result = builder.build(callable.get().execute(List.of()).content());
             return new SelfCallable(result);
         }

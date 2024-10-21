@@ -1,10 +1,12 @@
-package org.racketsimulator.callable;
+package org.racketsimulator.callable.builtin;
 
+import org.racketsimulator.callable.Callable;
+import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.expression.Expression;
 
 import java.util.List;
 
-public class SelfCallable implements Callable{
+public class SelfCallable implements Callable {
     private final Expression selfExpression;
 
     public SelfCallable(Expression selfExpression) {

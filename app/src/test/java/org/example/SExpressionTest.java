@@ -6,7 +6,7 @@ import org.racketsimulator.Configuration;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 import org.racketsimulator.callable.InvalidCallableArgs;
-import org.racketsimulator.callable.DefinedCallable;
+import org.racketsimulator.callable.builtin.DefinedCallable;
 
 import java.util.ArrayList;
 import java.util.List;

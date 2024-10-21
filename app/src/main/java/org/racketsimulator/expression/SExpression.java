@@ -1,10 +1,10 @@
 package org.racketsimulator.expression;
 
 import org.racketsimulator.callable.Callable;
-import org.racketsimulator.callable.DefinedCallable;
-import org.racketsimulator.callable.SelfCallable;
+import org.racketsimulator.callable.builtin.DefinedCallable;
+import org.racketsimulator.callable.builtin.SelfCallable;
 import org.racketsimulator.environment.Environment;
-import org.racketsimulator.expressionbuilder.EnvironmentBuilder;
+import org.racketsimulator.expressionbuilder.EnvironmentParser;
 import org.racketsimulator.expressionbuilder.ExpressionBuilder;
 
 import java.util.ArrayList;
@@ -36,7 +36,10 @@ public class SExpression implements Expression{
         }
 
         if ((action instanceof QExpression))
-            throw new InvalidExpression("SExpression can't have QExpression as first proc argument.");
+            if (valueSize() == 1)
+                return action;
+            else
+                throw new InvalidExpression("SExpression can't have QExpression as first proc argument.");
 
         if (action instanceof Numeric) {
             return action;
@@ -50,7 +53,7 @@ public class SExpression implements Expression{
         if (!(proc instanceof DefinedCallable))
             return proc.execute(args);
 
-        ExpressionBuilder constructor = new EnvironmentBuilder(args, runtime);
+        ExpressionBuilder constructor = new EnvironmentParser(args, runtime);
         Expression procExpression = constructor.build(proc.execute(new ArrayList<>()).content());
         return procExpression.evaluate();
     }
