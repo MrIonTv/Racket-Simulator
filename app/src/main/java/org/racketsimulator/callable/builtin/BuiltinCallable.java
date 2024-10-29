@@ -47,7 +47,7 @@ public abstract class BuiltinCallable implements Callable {
             return new SelfCallable(result);
         }
 
-        throw new InvalidExpression("Impossible to solve the symbol: " + symbol.content());
+        throw new InvalidExpression("Impossible to solve the symbol: " + symbol.stringContent());
     }
 
     private Expression accessSymbol(Symbol action) {

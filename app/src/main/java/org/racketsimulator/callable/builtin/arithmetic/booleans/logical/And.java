@@ -15,7 +15,7 @@ public class And implements Callable {
     @Override
     public Expression execute(List<Expression> args) {
         if (args.isEmpty())
-            throw new InvalidCallableArgs("For AND operation is required one or more Symbols of type #t or #f");
+            throw new InvalidCallableArgs("For AND operation is required one or args");
 
         boolean valueOfTruth = true;
         for (Expression arg : args) {

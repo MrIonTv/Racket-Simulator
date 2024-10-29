@@ -1,6 +1,9 @@
 package org.racketsimulator.callable;
 
-public class InvalidCallableArgs extends Error {
+import org.racketsimulator.thowables.RacketSimError;
+
+public class InvalidCallableArgs extends RacketSimError {
     public InvalidCallableArgs(String s) {
+        super(s);
     }
 }

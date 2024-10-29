@@ -95,7 +95,7 @@ public class SExpression implements Expression{
         if (callable.isPresent())
             return callable.get();
 
-        throw new InvalidExpression("Impossible to solve the symbol: " + symbol.content());
+        throw new InvalidExpression("Impossible to solve the symbol: " + symbol.stringContent());
     }
 
     private Expression accessSymbol(Symbol action) {

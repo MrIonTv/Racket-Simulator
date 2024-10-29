@@ -1,6 +1,8 @@
 package org.racketsimulator.expression;
 
-public class InvalidExpression extends Error {
+import org.racketsimulator.thowables.RacketSimError;
+
+public class InvalidExpression extends RacketSimError {
     public InvalidExpression(String message) {
         super(message);
     }

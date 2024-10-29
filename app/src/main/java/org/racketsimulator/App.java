@@ -3,12 +3,12 @@
  */
 package org.racketsimulator;
 
-import org.racketsimulator.expressionbuilder.ExpressionBuilder;
+import org.racketsimulator.repl.REPL;
 
 public class App {
     public static void main(String[] args) {
         Configuration config = new Configuration();
-        ExpressionBuilder entranceParser = config.entranceParser();
-        System.out.println("Funca");
+        REPL driver = config.mainDriver();
+        driver.run();
     }
 }

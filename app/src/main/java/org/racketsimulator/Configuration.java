@@ -16,10 +16,16 @@ import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.Symbol;
 import org.racketsimulator.expressionbuilder.StringParser;
 import org.racketsimulator.expressionbuilder.ExpressionBuilder;
+import org.racketsimulator.repl.MainDriver;
+import org.racketsimulator.repl.REPL;
 
 import java.util.HashMap;
 
 public class Configuration {
+    public REPL mainDriver() {
+        return new MainDriver(entranceParser());
+    }
+
     public ExpressionBuilder entranceParser() {
         Environment runtime = runTime();
         return new StringParser(runtime);
