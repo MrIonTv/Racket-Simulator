@@ -40,8 +40,8 @@ public class LessEqualsThan extends BuiltinCallable {
             throw new InvalidCallableArgs("Operator <= requires all of its args to be Numerical. Received: " +
                     tester.content() + ".");
 
-        int subjectInt = Integer.parseInt(subject.content());
-        int testerInt = Integer.parseInt(tester.content());
+        int subjectInt = Integer.parseInt(subject.stringContent());
+        int testerInt = Integer.parseInt(tester.stringContent());
         if (subjectInt > testerInt)
             valueOfTruth = false;
 

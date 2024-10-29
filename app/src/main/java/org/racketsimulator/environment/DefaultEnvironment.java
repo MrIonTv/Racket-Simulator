@@ -25,7 +25,7 @@ public class DefaultEnvironment implements Environment{
         if (existent.isPresent())
             throw new UsedSymbol("The Symbol: " + symbol.content() + ", has already been defined.");
 
-        callables.put(symbol.content(), callable);
+        callables.put(symbol.stringContent(), callable);
     }
 
     /**
@@ -34,7 +34,7 @@ public class DefaultEnvironment implements Environment{
      */
     @Override
     public Optional<Callable> search(Symbol symbol) {
-        String key = symbol.content();
+        String key = symbol.stringContent();
         Callable result = callables.getOrDefault(key, null);
         if (result != null)
             return Optional.of(result);

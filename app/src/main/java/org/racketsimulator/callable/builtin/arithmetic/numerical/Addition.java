@@ -30,14 +30,14 @@ public class Addition extends BuiltinCallable {
 
         if (subject instanceof Symbol)
             subject = fixExpression(subject);
-        int subjectInt = Integer.parseInt(subject.content());
+        int subjectInt = Integer.parseInt(subject.stringContent());
 
         for (Expression arg : args.subList(1, args.size())) {
             Expression value = arg.evaluate();
             if (!(value instanceof Numeric))
                 throw new InvalidCallableArgs("Operator + requires all of its args to be Numerical. Received: " +
                         value.content() + ".");
-            int valueInt = Integer.parseInt(value.content());
+            int valueInt = Integer.parseInt(value.stringContent());
             subjectInt += valueInt;
         }
 

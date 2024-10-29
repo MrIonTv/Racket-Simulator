@@ -23,7 +23,7 @@ public class AdditionTest {
 
         Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("5", result.content(), "The result should be 5 when only one number is provided.");
+        assertEquals("5", result.stringContent(), "The result should be 5 when only one number is provided.");
     }
 
     @Test
@@ -37,7 +37,7 @@ public class AdditionTest {
 
         Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("10", result.content(), "The result should be 10 for 5 + 3 + 2.");
+        assertEquals("10", result.stringContent(), "The result should be 10 for 5 + 3 + 2.");
     }
 
     @Test
@@ -76,7 +76,7 @@ public class AdditionTest {
 
         Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("13", result.content(), "The result should be 13 when the first evaluated SExpression is 8 and the second number is 5.");
+        assertEquals("13", result.stringContent(), "The result should be 13 when the first evaluated SExpression is 8 and the second number is 5.");
     }
 
     @Test
@@ -98,6 +98,6 @@ public class AdditionTest {
 
         Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("10", result.content(), "The result should be 10 when nested SExpressions evaluate to 8 and another argument is 2.");
+        assertEquals("10", result.stringContent(), "The result should be 10 when nested SExpressions evaluate to 8 and another argument is 2.");
     }
 }

@@ -45,7 +45,7 @@ public class QuoteTest {
 
         // Assert
         assertInstanceOf(QExpression.class, result, "Expected a QExpression to be returned.");
-        assertEquals("'( (+ 1 2) )", ((QExpression) result).content(), "The QExpression should contain the original argument.");
+        assertEquals("'(+ 1 2)", ((QExpression) result).stringContent(), "The QExpression should contain the original argument.");
     }
 
     @Test

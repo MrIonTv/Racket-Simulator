@@ -27,7 +27,7 @@ public class EvalTest {
         Expression result = eval.execute(args);
 
         // Assert
-        assertEquals(numericArg.content(), result.content(), "Expected the Numeric argument to be evaluated and returned as-is.");
+        assertEquals(numericArg.stringContent(), result.stringContent(), "Expected the Numeric argument to be evaluated and returned as-is.");
     }
 
     @Test
@@ -45,7 +45,7 @@ public class EvalTest {
         Expression result = eval.execute(args);
 
         // Assert
-        assertEquals(expectedExpression.content(), result.content(), "Expected the QExpression " +
+        assertEquals(expectedExpression.stringContent(), result.stringContent(), "Expected the QExpression " +
                 "to be built and evaluated correctly.");
     }
 

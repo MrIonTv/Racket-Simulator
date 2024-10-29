@@ -35,7 +35,7 @@ public class ApplyTest {
 
         Expression result = apply.execute(List.of(symbol, list));
 
-        assertEquals("3", result.content());
+        assertEquals("3", result.stringContent());
     }
 
     @Test

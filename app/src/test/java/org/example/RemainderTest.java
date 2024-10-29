@@ -24,7 +24,7 @@ public class RemainderTest {
 
         Expression result = plus.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("5", result.content(), "The result should be 5 when only one number is provided.");
+        assertEquals("5", result.stringContent(), "The result should be 5 when only one number is provided.");
     }
 
     @Test
@@ -38,7 +38,7 @@ public class RemainderTest {
 
         Expression result = plus.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("0", result.content(), "The result should be 1 for 6 % (3 * 2).");
+        assertEquals("0", result.stringContent(), "The result should be 1 for 6 % (3 * 2).");
     }
 
     @Test
@@ -77,7 +77,7 @@ public class RemainderTest {
 
         Expression result = rem.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("3", result.content(), "The result should be 3 when the first evaluated SExpression is 8 and the second number is 5.");
+        assertEquals("3", result.stringContent(), "The result should be 3 when the first evaluated SExpression is 8 and the second number is 5.");
     }
 
     @Test
@@ -98,6 +98,6 @@ public class RemainderTest {
 
         Expression result = rem.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("0", result.content(), "The result should be 0 when nested SExpressions evaluate to 8 and another argument is 2.");
+        assertEquals("0", result.stringContent(), "The result should be 0 when nested SExpressions evaluate to 8 and another argument is 2.");
     }
 }

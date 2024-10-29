@@ -25,7 +25,7 @@ public class SubtractionTest {
 
         Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("5", result.content(), "The result should be 5 when only one number is provided.");
+        assertEquals("5", result.stringContent(), "The result should be 5 when only one number is provided.");
     }
 
     @Test
@@ -39,7 +39,7 @@ public class SubtractionTest {
 
         Expression result = callable.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("0", result.content(), "The result should be 0 for 5 - 3 - 2.");
+        assertEquals("0", result.stringContent(), "The result should be 0 for 5 - 3 - 2.");
     }
 
     @Test
@@ -78,7 +78,7 @@ public class SubtractionTest {
 
         Expression result = sub.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("3", result.content(), "The result should be 3 when the first evaluated SExpression is 8 and the second number is 3.");
+        assertEquals("3", result.stringContent(), "The result should be 3 when the first evaluated SExpression is 8 and the second number is 3.");
     }
 
     @Test
@@ -99,6 +99,6 @@ public class SubtractionTest {
 
         Expression result = sub.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("6", result.content(), "The result should be 6 when nested SExpressions evaluate to 8 and another argument is 2.");
+        assertEquals("6", result.stringContent(), "The result should be 6 when nested SExpressions evaluate to 8 and another argument is 2.");
     }
 }

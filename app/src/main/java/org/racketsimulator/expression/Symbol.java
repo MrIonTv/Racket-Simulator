@@ -1,6 +1,6 @@
 package org.racketsimulator.expression;
 
-import org.racketsimulator.environment.Environment;
+import java.util.List;
 
 public class Symbol implements Expression{
     private final String value;
@@ -21,8 +21,8 @@ public class Symbol implements Expression{
      * @return this instance text value.
      */
     @Override
-    public String content() {
-        return value;
+    public List<Expression> content() {
+        return List.of(this);
     }
 
     /**
@@ -31,5 +31,13 @@ public class Symbol implements Expression{
     @Override
     public int valueSize() {
         return 1;
+    }
+
+    /**
+     * @return 
+     */
+    @Override
+    public String stringContent() {
+        return value;
     }
 }

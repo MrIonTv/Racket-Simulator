@@ -32,13 +32,13 @@ public class Equals extends BuiltinCallable {
             throw new InvalidCallableArgs("Operator = requires all of its args to be Numerical. Received: " +
                     subject.content() + ".");
 
-        int subjectInt = Integer.parseInt(subject.content());
+        int subjectInt = Integer.parseInt(subject.stringContent());
         for (Expression arg : args) {
             Expression value = arg.evaluate();
             if (!(value instanceof Numeric))
                 throw new InvalidCallableArgs("Operator = requires all of its args to be Numerical. Received: " +
                         value.content() + ".");
-            int valueInt = Integer.parseInt(value.content());
+            int valueInt = Integer.parseInt(value.stringContent());
             if (subjectInt != valueInt)
                 valueOfTruth = false;
         }

@@ -43,7 +43,7 @@ public abstract class BuiltinCallable implements Callable {
         Optional<Callable> callable = runtime.search((Symbol) symbol);
         if (callable.isPresent()) {
             ExpressionBuilder builder = new EnvironmentParser(List.of(), runtime);
-            Expression result = builder.build(callable.get().execute(List.of()).content());
+            Expression result = builder.build(callable.get().execute(List.of()).stringContent());
             return new SelfCallable(result);
         }
 
@@ -51,7 +51,7 @@ public abstract class BuiltinCallable implements Callable {
     }
 
     private Expression accessSymbol(Symbol action) {
-        String value = action.content();
+        String value = action.stringContent();
 
         if (value.isEmpty())
             return new Empty();

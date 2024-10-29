@@ -26,7 +26,7 @@ public class GreaterEqualsThanTest {
 
         Expression result = greaterEquals.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when the first number is greater than the second.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when the first number is greater than the second.");
     }
 
     @Test
@@ -39,7 +39,7 @@ public class GreaterEqualsThanTest {
 
         Expression result = greaterEquals.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when the two numbers are equal.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when the two numbers are equal.");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class GreaterEqualsThanTest {
 
         Expression result = greaterEquals.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#f", result.content(), "The result should be #f when the first number is less than the second.");
+        assertEquals("#f", result.stringContent(), "The result should be #f when the first number is less than the second.");
     }
 
     @Test
@@ -92,7 +92,7 @@ public class GreaterEqualsThanTest {
 
         Expression result = greaterEquals.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when the first evaluated SExpression is greater than the second.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when the first evaluated SExpression is greater than the second.");
     }
 
     @Test
@@ -113,6 +113,6 @@ public class GreaterEqualsThanTest {
 
         Expression result = greaterEquals.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when nested SExpressions evaluate to equal values.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when nested SExpressions evaluate to equal values.");
     }
 }

@@ -1,7 +1,10 @@
 package org.racketsimulator.expression;
 
+import java.util.List;
+
 public interface Expression {
     Expression evaluate();
-    String content();
+    List<Expression> content();
     int valueSize();
+    String stringContent();
 }

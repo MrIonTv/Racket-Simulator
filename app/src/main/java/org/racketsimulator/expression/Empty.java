@@ -1,6 +1,6 @@
 package org.racketsimulator.expression;
 
-import org.racketsimulator.environment.Environment;
+import java.util.List;
 
 public class Empty implements Expression{
     /**
@@ -15,8 +15,8 @@ public class Empty implements Expression{
      * @return an empty String
      */
     @Override
-    public String content() {
-        return "'( )";
+    public List<Expression> content() {
+        return List.of(this);
     }
 
     /**
@@ -25,5 +25,10 @@ public class Empty implements Expression{
     @Override
     public int valueSize() {
         return 0;
+    }
+
+    @Override
+    public String stringContent() {
+        return "'()";
     }
 }

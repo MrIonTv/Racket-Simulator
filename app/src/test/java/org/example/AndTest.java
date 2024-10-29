@@ -26,7 +26,7 @@ public class AndTest {
 
         Expression result = andOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when all arguments are true.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when all arguments are true.");
     }
 
     @Test
@@ -40,7 +40,7 @@ public class AndTest {
 
         Expression result = andOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#f", result.content(), "The result should be #f when at least one argument is false.");
+        assertEquals("#f", result.stringContent(), "The result should be #f when at least one argument is false.");
     }
 
     @Test
@@ -53,7 +53,7 @@ public class AndTest {
 
         Expression result = andOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#f", result.content(), "The result should be #f when all arguments are false.");
+        assertEquals("#f", result.stringContent(), "The result should be #f when all arguments are false.");
     }
 
     @Test
@@ -91,7 +91,7 @@ public class AndTest {
 
         Expression result = andOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#f", result.content(), "The result should be #f when at least one argument evaluates to false.");
+        assertEquals("#f", result.stringContent(), "The result should be #f when at least one argument evaluates to false.");
     }
 
 }

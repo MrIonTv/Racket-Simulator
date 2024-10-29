@@ -27,9 +27,9 @@ public class Eval extends BuiltinCallable {
         if (!(arg instanceof QExpression) && !(arg instanceof Numeric))
             throw new InvalidCallableArgs("Operation eval requires numeric or QExpression as its arg.");
 
-        String expression = arg.content();
-        if (arg instanceof QExpression)
-            expression = expression.substring(1);
+        String expression = arg.content().getFirst().stringContent();
+//        if (arg instanceof QExpression)
+//            expression = expression.substring(1);
         Expression repairedExpression = builder.build(expression);
 
         return repairedExpression.evaluate();

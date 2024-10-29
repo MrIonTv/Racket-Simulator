@@ -26,17 +26,17 @@ public class Or implements Callable {
             if (arg instanceof SExpression) {
                 var pivot = arg.evaluate();
                 if (pivot instanceof Symbol) {
-                    if (!Objects.equals(pivot.content(), "#f") && !Objects.equals(pivot.content(), "#t"))
+                    if (!Objects.equals(pivot.stringContent(), "#f") && !Objects.equals(pivot.stringContent(), "#t"))
                         throw new InvalidCallableArgs("Expecting only #t or #f symbols for OR operation.");
-                    if (Objects.equals(pivot.content(), "#t"))
+                    if (Objects.equals(pivot.stringContent(), "#t"))
                         valueOfTruth = true;
                 } else {
                     throw new InvalidCallableArgs("Expecting only #t or #f symbols for OR operation.");
                 }
             } else if (arg instanceof Symbol) {
-                if (!Objects.equals(arg.content(), "#f") && !Objects.equals(arg.content(), "#t"))
+                if (!Objects.equals(arg.stringContent(), "#f") && !Objects.equals(arg.stringContent(), "#t"))
                     throw new InvalidCallableArgs("Expecting only #t or #f symbols for OR operation.");
-                if (Objects.equals(arg.content(), "#t"))
+                if (Objects.equals(arg.stringContent(), "#t"))
                     valueOfTruth = true;
             } else {
                 throw new InvalidCallableArgs("Expecting only #t or #f symbols for OR operation.");

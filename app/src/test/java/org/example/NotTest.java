@@ -21,7 +21,7 @@ public class NotTest {
 
         Expression result = notOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#f", result.content(), "The result should be #f when the argument is #t.");
+        assertEquals("#f", result.stringContent(), "The result should be #f when the argument is #t.");
     }
 
     @Test
@@ -31,7 +31,7 @@ public class NotTest {
 
         Expression result = notOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when the argument is #f.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when the argument is #f.");
     }
 
     @Test
@@ -75,7 +75,7 @@ public class NotTest {
 
         Expression result = notOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#f", result.content(), "The result should be #f when the SExpression evaluates to #t.");
+        assertEquals("#f", result.stringContent(), "The result should be #f when the SExpression evaluates to #t.");
     }
 
     @Test
@@ -93,6 +93,6 @@ public class NotTest {
 
         Expression result = notOperation.execute(List.of(outerNotExpression));
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when the SExpression evaluates to (not (not #f)).");
+        assertEquals("#t", result.stringContent(), "The result should be #t when the SExpression evaluates to (not (not #f)).");
     }
 }

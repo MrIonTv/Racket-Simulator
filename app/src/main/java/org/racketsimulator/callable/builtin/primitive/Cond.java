@@ -28,7 +28,7 @@ public class Cond extends BuiltinCallable {
             if (arg instanceof SExpression && arg.valueSize() >= 2) {
                 List<Expression> conditions = resolveConditions(arg);
 
-                String conditionContent = conditions.getFirst().content();
+                String conditionContent = conditions.getFirst().stringContent();
                 if ((Objects.equals(conditionContent, "else") && arg != args.getLast()))
                     throw new InvalidCallableArgs("Else condition can only be used once in the end of cond.");
 
@@ -43,11 +43,11 @@ public class Cond extends BuiltinCallable {
     }
 
     private List<Expression> resolveConditions(Expression arg) {
-        String content = arg.content().trim();
+        String content = arg.stringContent().trim();
         int limit = content.indexOf(' ');
 
-        Expression result = builder.build(content.substring(0, limit));
-        Expression executable = builder.build(content.substring(limit + 1));
+        Expression result = builder.build(arg.content().getFirst().stringContent());
+        Expression executable = builder.build(arg.content().getLast().stringContent());
         return List.of(result.evaluate(), executable);
     }
 

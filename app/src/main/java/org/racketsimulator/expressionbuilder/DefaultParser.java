@@ -51,7 +51,7 @@ public abstract class DefaultParser implements ExpressionBuilder{
         Optional<Callable> value = runtime.search(token);
         if (value.isPresent())
             if (value.get() instanceof DefinedCallable)
-                return new Symbol(value.get().execute(new ArrayList<>()).content());
+                return new Symbol(value.get().execute(new ArrayList<>()).stringContent());
         return token;
     }
 

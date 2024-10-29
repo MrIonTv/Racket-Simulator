@@ -25,17 +25,17 @@ public class Not implements Callable {
         if (arg instanceof SExpression) {
             var pivot = arg.evaluate();
             if (pivot instanceof Symbol) {
-                if (!Objects.equals(pivot.content(), "#f") && !Objects.equals(pivot.content(), "#t"))
+                if (!Objects.equals(pivot.stringContent(), "#f") && !Objects.equals(pivot.stringContent(), "#t"))
                     throw new InvalidExpression("Expecting only #t or #f symbols for NOT operation.");
-                if (Objects.equals(pivot.content(), "#t"))
+                if (Objects.equals(pivot.stringContent(), "#t"))
                     valueOfTruth = false;
             } else {
                 throw new InvalidExpression("Expecting only #t or #f symbols for NOT operation.");
             }
         } else if (arg instanceof Symbol) {
-            if (!Objects.equals(arg.content(), "#f") && !Objects.equals(arg.content(), "#t"))
+            if (!Objects.equals(arg.stringContent(), "#f") && !Objects.equals(arg.stringContent(), "#t"))
                 throw new InvalidExpression("Expecting only #t or #f symbols for NOT operation.");
-            if (Objects.equals(arg.content(), "#t"))
+            if (Objects.equals(arg.stringContent(), "#t"))
                 valueOfTruth = false;
         } else {
             throw new InvalidExpression("Expecting only #t or #f symbols for NOT operation.");

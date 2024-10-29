@@ -24,7 +24,7 @@ public class MultiplicationTest {
 
         Expression result = plus.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("5", result.content(), "The result should be 5 when only one number is provided.");
+        assertEquals("5", result.stringContent(), "The result should be 5 when only one number is provided.");
     }
 
     @Test
@@ -38,7 +38,7 @@ public class MultiplicationTest {
 
         Expression result = plus.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("30", result.content(), "The result should be 10 for 5 * 3 * 2.");
+        assertEquals("30", result.stringContent(), "The result should be 10 for 5 * 3 * 2.");
     }
 
     @Test
@@ -77,7 +77,7 @@ public class MultiplicationTest {
 
         Expression result = multi.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("40", result.content(), "The result should be 40 when the first evaluated SExpression is 8 and the second number is 5.");
+        assertEquals("40", result.stringContent(), "The result should be 40 when the first evaluated SExpression is 8 and the second number is 5.");
     }
 
     @Test
@@ -98,6 +98,6 @@ public class MultiplicationTest {
 
         Expression result = multi.execute(args);
         assertInstanceOf(Numeric.class, result);
-        assertEquals("16", result.content(), "The result should be 16 when nested SExpressions evaluate to 8 and another argument is 2.");
+        assertEquals("16", result.stringContent(), "The result should be 16 when nested SExpressions evaluate to 8 and another argument is 2.");
     }
 }

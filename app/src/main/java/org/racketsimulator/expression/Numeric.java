@@ -1,5 +1,7 @@
 package org.racketsimulator.expression;
 
+import java.util.List;
+
 public class Numeric implements Expression{
     private final int value;
     
@@ -19,8 +21,8 @@ public class Numeric implements Expression{
      * @return this instance int value.
      */
     @Override
-    public String content() {
-        return value + "";
+    public List<Expression> content() {
+        return List.of(this);
     }
 
     /**
@@ -31,4 +33,8 @@ public class Numeric implements Expression{
         return 1;
     }
 
+    @Override
+    public String stringContent() {
+        return value + "";
+    }
 }

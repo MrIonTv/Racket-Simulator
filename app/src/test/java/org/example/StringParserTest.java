@@ -24,7 +24,7 @@ public class StringParserTest {
         Expression result = parser.build(input);
 
         assertInstanceOf(Numeric.class, result);
-        assertEquals("42", (result).content());
+        assertEquals("42", (result).stringContent());
 
     }
 
@@ -34,7 +34,7 @@ public class StringParserTest {
         Expression result = parser.build(input);
 
         assertInstanceOf(Symbol.class, result);
-        assertEquals("x", ((Symbol) result).content());
+        assertEquals("x", ((Symbol) result).stringContent());
     }
 
     @Test

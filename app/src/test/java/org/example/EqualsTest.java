@@ -27,7 +27,7 @@ public class EqualsTest {
 
         Expression result = equalsOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when all numbers are equal.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when all numbers are equal.");
     }
 
     @Test
@@ -41,7 +41,7 @@ public class EqualsTest {
 
         Expression result = equalsOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#f", result.content(), "The result should be #f when at least one number is different.");
+        assertEquals("#f", result.stringContent(), "The result should be #f when at least one number is different.");
     }
 
     @Test
@@ -51,7 +51,7 @@ public class EqualsTest {
 
         Expression result = equalsOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when there is only one argument.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when there is only one argument.");
     }
 
     @Test
@@ -89,7 +89,7 @@ public class EqualsTest {
 
         Expression result = equalsOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when all evaluated arguments are equal.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when all evaluated arguments are equal.");
     }
 
     @Test
@@ -110,6 +110,6 @@ public class EqualsTest {
 
         Expression result = equalsOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when nested SExpressions evaluate to equal values.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when nested SExpressions evaluate to equal values.");
     }
 }

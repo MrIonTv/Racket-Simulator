@@ -36,7 +36,7 @@ class CondTest {
 
         Expression result = cond.execute(List.of(trueCondition));
 
-        assertEquals(qTrue.content(), result.content(), "Debería devolver el resultado de la condición verdadera.");
+        assertEquals(qTrue.stringContent(), result.stringContent(), "Debería devolver el resultado de la condición verdadera.");
     }
 
     @Test
@@ -47,7 +47,7 @@ class CondTest {
 
         Expression result = cond.execute(List.of(falseCondition, elseCondition));
 
-        assertEquals(qElse.content(), result.content(), "Debería devolver el resultado de la condición else.");
+        assertEquals(qElse.stringContent(), result.stringContent(), "Debería devolver el resultado de la condición else.");
     }
 
     @Test

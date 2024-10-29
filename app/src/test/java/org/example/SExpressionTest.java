@@ -35,7 +35,7 @@ class SExpressionTest {
 
         Expression result = sExpression.evaluate();
         assertInstanceOf(Numeric.class, result);
-        assertEquals("3", result.content());
+        assertEquals("3", result.stringContent());
     }
 
     @Test
@@ -51,7 +51,7 @@ class SExpressionTest {
 
         Expression result = sExpression.evaluate();
         assertInstanceOf(Numeric.class, result);
-        assertEquals("2", result.content());
+        assertEquals("2", result.stringContent());
     }
 
     @Test
@@ -80,7 +80,7 @@ class SExpressionTest {
         List<Expression> values = new ArrayList<>(List.of(arg1, arg2));
         SExpression sExpression = new SExpression(values, runtime);
 
-        assertEquals("1 2 ", sExpression.content());
+        assertEquals("1 2 ", sExpression.stringContent());
     }
 
     @Test
@@ -123,7 +123,7 @@ class SExpressionTest {
 
         Expression result = sExpression.evaluate();
         assertInstanceOf(Numeric.class, result);
-        assertEquals("9", result.content()); // Verificamos que el contenido sea "9"
+        assertEquals("9", result.stringContent()); // Verificamos que el contenido sea "9"
     }
 
     @Test
@@ -135,7 +135,7 @@ class SExpressionTest {
 
         Expression result = sExpression.evaluate();
         assertInstanceOf(Numeric.class, result);
-        assertEquals("10", result.content()); // Verificamos que el contenido sea "9"
+        assertEquals("10", result.stringContent()); // Verificamos que el contenido sea "9"
     }
 
     @Test
@@ -149,6 +149,6 @@ class SExpressionTest {
 
         Expression result = sExpression.evaluate();
         assertInstanceOf(Numeric.class, result);
-        assertEquals("5", result.content());
+        assertEquals("5", result.stringContent());
     }
 }

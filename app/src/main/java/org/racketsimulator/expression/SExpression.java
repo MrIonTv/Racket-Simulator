@@ -54,7 +54,7 @@ public class SExpression implements Expression{
             return proc.execute(args);
 
         ExpressionBuilder constructor = new EnvironmentParser(args, runtime);
-        Expression procExpression = constructor.build(proc.execute(new ArrayList<>()).content());
+        Expression procExpression = constructor.build(proc.execute(new ArrayList<>()).stringContent());
         return procExpression.evaluate();
     }
 
@@ -62,12 +62,8 @@ public class SExpression implements Expression{
      * @return the value of every Expression in the SExpression.
      */
     @Override
-    public String content() {
-        StringBuilder result = new StringBuilder();
-        for (Expression value : values) {
-            result.append(value.content()).append(" ");
-        }
-        return result.toString();
+    public List<Expression> content() {
+        return values;
     }
 
     /**
@@ -76,6 +72,18 @@ public class SExpression implements Expression{
     @Override
     public int valueSize() {
         return values.size();
+    }
+
+    /**
+     * @return 
+     */
+    @Override
+    public String stringContent() {
+        StringBuilder result = new StringBuilder();
+        for (Expression value : values) {
+            result.append(value.stringContent()).append(" ");
+        }
+        return result.toString();
     }
 
     private Callable validateSymbol(Symbol action) {
@@ -91,7 +99,7 @@ public class SExpression implements Expression{
     }
 
     private Expression accessSymbol(Symbol action) {
-        String value = action.content();
+        String value = action.stringContent();
 
         if (value.isEmpty())
             return new Empty();

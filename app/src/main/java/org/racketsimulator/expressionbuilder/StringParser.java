@@ -41,7 +41,7 @@ public class StringParser extends DefaultParser {
                 } else if (Character.isLetterOrDigit(sentence.charAt(i + 1))) {
                     result.append(SUGAR_REPLACEMENT);
                     int j = i + 1;
-                    while (j < sentence.length() && Character.isLetterOrDigit(sentence.charAt(j))) {
+                    while (j < sentence.length()) {
                         result.append(sentence.charAt(j));
                         j++;
                     }

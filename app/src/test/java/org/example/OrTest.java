@@ -25,7 +25,7 @@ public class OrTest {
 
         Expression result = orOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when at least one argument is true.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when at least one argument is true.");
     }
 
     @Test
@@ -39,7 +39,7 @@ public class OrTest {
 
         Expression result = orOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when at least one argument is true.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when at least one argument is true.");
     }
 
     @Test
@@ -52,7 +52,7 @@ public class OrTest {
 
         Expression result = orOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#f", result.content(), "The result should be #f when all arguments are false.");
+        assertEquals("#f", result.stringContent(), "The result should be #f when all arguments are false.");
     }
 
     @Test
@@ -90,7 +90,7 @@ public class OrTest {
 
         Expression result = orOperation.execute(args);
         assertInstanceOf(Symbol.class, result);
-        assertEquals("#t", result.content(), "The result should be #t when at least one argument evaluates to true.");
+        assertEquals("#t", result.stringContent(), "The result should be #t when at least one argument evaluates to true.");
     }
 
 }
