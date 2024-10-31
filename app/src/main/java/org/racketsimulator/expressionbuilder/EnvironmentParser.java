@@ -36,20 +36,25 @@ public class EnvironmentParser extends DefaultParser {
         List<Expression> expressions = new ArrayList<>();
         expressions.add(new Symbol(tokens.getFirst()));
         for (int i = 1; i < tokenSize; i++) {
-            if (i < minim) {
-                expressions.add(args.get(i));
-            } else {
-                Expression token = evalToken(tokens.get(i));
-                if (token instanceof Symbol) {
-                    Optional<Callable> environmentSymbol = runtime.search((Symbol) token);
-                    if (environmentSymbol.isPresent())
-                        token = environmentSymbol.get().execute(List.of());
-                    else
-                        if (!args.isEmpty())
-                            token = args.get(i-1);
+            Expression token = evalToken(tokens.get(i));
+            if (token instanceof Symbol) {
+                Optional<Callable> environmentSymbol = runtime.search((Symbol) token);
+                if (environmentSymbol.isPresent()) {
+                    token = environmentSymbol.get().execute(List.of());
+                } else {
+                    try {
+                        token = args.get(i-2);
+                        if (token instanceof Symbol) {
+                            environmentSymbol = runtime.search((Symbol) token);
+                            if (environmentSymbol.isPresent())
+                                token = environmentSymbol.get().execute(List.of());
+                        }
+                    } catch (Exception e) {
+                        throw new InvalidCallableArgs("Insufficient args passed for Procedure");
+                    }
                 }
-                expressions.add(token);
             }
+            expressions.add(token);
         }
 
         return new SExpression(expressions, runtime).evaluate();

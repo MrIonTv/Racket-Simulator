@@ -35,9 +35,8 @@ public class DefineTest {
 
     @Test
     void defineSimpleTest() {
-        Symbol symbol = new Symbol("fun");
+        Symbol symbol = new Symbol("x");
         Expression body = new SExpression(List.of(
-                new Symbol("x"),
                 new Numeric(1)),
                 runtime);
         defineCall.execute(List.of(symbol, body));
