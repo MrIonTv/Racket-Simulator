@@ -5,7 +5,6 @@ import org.racketsimulator.callable.builtin.BuiltinCallable;
 import org.racketsimulator.callable.builtin.DefinedCallable;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.Expression;
-import org.racketsimulator.expression.SExpression;
 import org.racketsimulator.expression.Symbol;
 
 import java.util.List;
