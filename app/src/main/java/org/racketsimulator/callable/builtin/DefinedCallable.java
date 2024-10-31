@@ -7,9 +7,9 @@ import org.racketsimulator.expression.*;
 import java.util.List;
 
 public class DefinedCallable extends BuiltinCallable {
-    private final String body;
+    private final List<Expression> body;
 
-    public DefinedCallable(Environment runtime, String body) {
+    public DefinedCallable(Environment runtime, List<Expression> body) {
         super(runtime);
         this.body = body;
     }
@@ -23,6 +23,6 @@ public class DefinedCallable extends BuiltinCallable {
         if (!args.isEmpty())
             throw new InvalidCallableArgs("DefinedCallable requires exactly 0 args");
 
-        return new Symbol(this.body);
+        return new SExpression(body, super.runtime);
     }
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BuiltinCallable implements Callable {
-    private final Environment runtime;
+    protected final Environment runtime;
 
     public BuiltinCallable(Environment runtime) {
         this.runtime = runtime;

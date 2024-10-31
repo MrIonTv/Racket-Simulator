@@ -7,6 +7,8 @@ import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.builtin.DefinedCallable;
+import org.racketsimulator.expressionbuilder.ExpressionBuilder;
+import org.racketsimulator.expressionbuilder.StringParser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,8 +22,10 @@ class SExpressionTest {
     void setUp() {
         Configuration config = new Configuration();
         runtime = config.runTime();
-        runtime.defineSymbol(new Symbol("nine"), new DefinedCallable(runtime, "9"));
-        runtime.defineSymbol(new Symbol("OPERATION"), new DefinedCallable(runtime, "+ nine 1"));
+        runtime.defineSymbol(new Symbol("nine"), new DefinedCallable(runtime, List.of(new Numeric(9))));
+        ExpressionBuilder builder = new StringParser(runtime);
+        runtime.defineSymbol(new Symbol("OPERATION"), new DefinedCallable(runtime,
+                builder.build("(+ nine 1)").content()));
     }
 
     @Test

@@ -7,10 +7,7 @@ import org.racketsimulator.callable.builtin.arithmetic.booleans.logical.Not;
 import org.racketsimulator.callable.builtin.arithmetic.booleans.logical.Or;
 import org.racketsimulator.callable.builtin.arithmetic.booleans.relational.*;
 import org.racketsimulator.callable.builtin.arithmetic.numerical.*;
-import org.racketsimulator.callable.builtin.primitive.Apply;
-import org.racketsimulator.callable.builtin.primitive.Cond;
-import org.racketsimulator.callable.builtin.primitive.Eval;
-import org.racketsimulator.callable.builtin.primitive.Quote;
+import org.racketsimulator.callable.builtin.primitive.*;
 import org.racketsimulator.environment.DefaultEnvironment;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.Symbol;
@@ -60,6 +57,8 @@ public class Configuration {
         runtime.defineSymbol(new Symbol("quote"), new Quote(runtime));
         runtime.defineSymbol(new Symbol("apply"), new Apply(runtime, new StringParser(runtime)));
         runtime.defineSymbol(new Symbol("eval"), new Eval(runtime, new StringParser(runtime)));
+
+        runtime.defineSymbol(new Symbol("define"), new Define(runtime));
     }
     //TODO
     public HashMap<String, Callable> runTimeMap() {

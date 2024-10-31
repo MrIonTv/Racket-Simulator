@@ -1,11 +1,13 @@
 package org.racketsimulator.expressionbuilder;
 
+import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class EnvironmentParser extends DefaultParser {
     private final List<Expression> args;
@@ -37,12 +39,20 @@ public class EnvironmentParser extends DefaultParser {
             if (i < minim) {
                 expressions.add(args.get(i));
             } else {
-                expressions.add(evalToken(tokens.get(i)));
+                Expression token = evalToken(tokens.get(i));
+                if (token instanceof Symbol) {
+                    Optional<Callable> environmentSymbol = runtime.search((Symbol) token);
+                    if (environmentSymbol.isPresent())
+                        token = environmentSymbol.get().execute(List.of());
+                    else
+                        if (!args.isEmpty())
+                            token = args.get(i-1);
+                }
+                expressions.add(token);
             }
         }
 
         return new SExpression(expressions, runtime).evaluate();
     }
-
 }
 

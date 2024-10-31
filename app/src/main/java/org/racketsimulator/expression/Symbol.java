@@ -6,7 +6,7 @@ public class Symbol implements Expression{
     private final String value;
 
     public Symbol(String value) {
-        this.value = value;
+        this.value = value.trim();
     }
 
     /**

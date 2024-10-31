@@ -3,10 +3,7 @@ package org.racketsimulator.expressionbuilder;
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.builtin.DefinedCallable;
 import org.racketsimulator.environment.Environment;
-import org.racketsimulator.expression.Empty;
-import org.racketsimulator.expression.Expression;
-import org.racketsimulator.expression.Numeric;
-import org.racketsimulator.expression.Symbol;
+import org.racketsimulator.expression.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,15 +41,7 @@ public abstract class DefaultParser implements ExpressionBuilder{
             return new Empty();
         if (checkNumber(token))
             return new Numeric(Integer.parseInt(token));
-        return evalSymbol(new Symbol(token));
-    }
-
-    protected Expression evalSymbol(Symbol token) {
-        Optional<Callable> value = runtime.search(token);
-        if (value.isPresent())
-            if (value.get() instanceof DefinedCallable)
-                return new Symbol(value.get().execute(new ArrayList<>()).stringContent());
-        return token;
+        return new Symbol(token);
     }
 
     protected boolean checkNumber(String value) {
