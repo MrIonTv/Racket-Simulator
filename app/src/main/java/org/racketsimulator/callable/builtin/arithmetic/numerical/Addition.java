@@ -14,9 +14,10 @@ public class Addition extends BuiltinCallable {
     public Addition(Environment runtime) {
         super(runtime);
     }
+
     /**
      * @param args Arguments that its evaluation must return a Numeric.
-     * @return a Numeric of the Sum of all args applied to the first one.
+     * @return a Numeric of the substract of all args applied to the first one.
      */
     @Override
     public Expression execute(List<Expression> args) {
@@ -34,8 +35,8 @@ public class Addition extends BuiltinCallable {
 
         for (Expression arg : args.subList(1, args.size())) {
             Expression value = arg.evaluate();
-            if (subject instanceof Symbol)
-                subject = fixExpression(subject);
+            if (value instanceof Symbol)
+                value = fixExpression(value);
             if (!(value instanceof Numeric))
                 throw new InvalidCallableArgs("Operator + requires all of its args to be Numerical. Received: " +
                         value.stringContent() + ".");
