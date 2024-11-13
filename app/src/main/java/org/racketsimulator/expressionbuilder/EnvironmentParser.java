@@ -2,12 +2,11 @@ package org.racketsimulator.expressionbuilder;
 
 import org.racketsimulator.callable.Callable;
 import org.racketsimulator.callable.InvalidCallableArgs;
+import org.racketsimulator.callable.builtin.DefinedCallable;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class EnvironmentParser extends DefaultParser {
     private final List<Expression> args;
@@ -34,16 +33,20 @@ public class EnvironmentParser extends DefaultParser {
                     " of args to their body args.");
 
         List<Expression> expressions = new ArrayList<>();
+        Map<String, Expression> seenExpressions = new HashMap<>();
         expressions.add(new Symbol(tokens.getFirst()));
         for (int i = 1; i < tokenSize; i++) {
             Expression token = evalToken(tokens.get(i));
-            if (token instanceof Symbol) {
+            Expression seen = token;
+            if (seenExpressions.containsKey(seen.stringContent())) {
+                token = seenExpressions.get(seen.stringContent());
+            } else if (token instanceof Symbol) {
                 Optional<Callable> environmentSymbol = runtime.search((Symbol) token);
-                if (environmentSymbol.isPresent()) {
+                if (environmentSymbol.isPresent() && environmentSymbol.get() instanceof DefinedCallable) {
                     token = environmentSymbol.get().execute(List.of());
                 } else {
                     try {
-                        token = args.get(i-2);
+                        token = args.removeFirst();
                         if (token instanceof Symbol) {
                             environmentSymbol = runtime.search((Symbol) token);
                             if (environmentSymbol.isPresent())
@@ -54,6 +57,7 @@ public class EnvironmentParser extends DefaultParser {
                     }
                 }
             }
+            seenExpressions.put(seen.stringContent(), token);
             expressions.add(token);
         }
 
@@ -61,3 +65,7 @@ public class EnvironmentParser extends DefaultParser {
     }
 }
 
+//(define fun
+//        (cond
+//    ((= x 1) 1)
+//        (else (fun (- x 1)))))
