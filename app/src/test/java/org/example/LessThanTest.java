@@ -60,7 +60,7 @@ public class LessThanTest {
         Callable greaterEquals = new LessThan(new DefaultEnvironment());
         List<Expression> args = Arrays.asList(
                 new Numeric(7),
-                new QExpression(List.of(new Symbol("#t")))
+                new QExpression(new Symbol("#t"))
         );
 
         assertThrows(InvalidCallableArgs.class, () -> {

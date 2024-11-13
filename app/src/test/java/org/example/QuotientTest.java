@@ -49,7 +49,7 @@ public class QuotientTest {
                 new Symbol("#t")
         );
 
-        assertThrows(InvalidCallableArgs.class, () -> {
+        assertThrows(InvalidExpression.class, () -> {
             plus.execute(args);
         }, "An exception should be thrown when a non-numeric argument is passed.");
     }

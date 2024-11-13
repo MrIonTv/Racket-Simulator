@@ -25,4 +25,9 @@ public class DefinedCallable extends BuiltinCallable {
 
         return new SExpression(body, super.runtime);
     }
+
+    @Override
+    protected Expression validateQExpression(QExpression expression) {
+        return null;
+    }
 }

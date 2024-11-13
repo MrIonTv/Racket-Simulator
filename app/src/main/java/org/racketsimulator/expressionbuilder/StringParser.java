@@ -7,6 +7,7 @@ import java.util.*;
 
 public class StringParser extends DefaultParser {
     private static final Character SUGAR = '\'';
+    private static final String EMPTY = "'()";
     private static final String SUGAR_REPLACEMENT = "(quote ";
 
     public StringParser(Environment runtime) {
@@ -33,7 +34,11 @@ public class StringParser extends DefaultParser {
             char ch = sentence.charAt(i);
 
             if (ch == SUGAR && i + 1 < sentence.length()) {
-                if (sentence.charAt(i + 1) == OPEN.charAt(0)) {
+                if (sentence.charAt(i + 1) == OPEN.charAt(0) &&
+                        i + 2 < sentence.length() && sentence.charAt(i + 2) == CLOSE.charAt(0)) {
+                    result.append(OPEN).append(CLOSE);
+                    i += 2;
+                } else if (sentence.charAt(i + 1) == OPEN.charAt(0)) {
                     result.append(SUGAR_REPLACEMENT);
                     insideQuote = true;
                     openParensCount = 1;
@@ -68,6 +73,7 @@ public class StringParser extends DefaultParser {
 
         return result.toString();
     }
+
 
     private Expression parse(List<String> tokens) {
         Iterator<String> iterator = tokens.iterator();

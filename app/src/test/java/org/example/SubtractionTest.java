@@ -50,7 +50,7 @@ public class SubtractionTest {
                 new Symbol("#t")
         );
 
-        assertThrows(InvalidCallableArgs.class, () -> {
+        assertThrows(InvalidExpression.class, () -> {
             callable.execute(args);
         }, "An exception should be thrown when a non-numeric argument is passed.");
     }

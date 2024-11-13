@@ -34,4 +34,9 @@ public class Eval extends BuiltinCallable {
 
         return repairedExpression.evaluate();
     }
+
+    @Override
+    protected Expression validateQExpression(QExpression expression) {
+        throw new InvalidCallableArgs("Operation eval can't handle QExpression neither List as argument.");
+    }
 }

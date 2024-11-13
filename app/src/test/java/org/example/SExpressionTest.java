@@ -66,7 +66,7 @@ class SExpressionTest {
 
     @Test
     void testEvaluateThrowsForQExpression() {
-        Expression qExpression = new QExpression(new ArrayList<>());
+        Expression qExpression = new QExpression(new Empty());
         Expression arg1 = new Numeric(1);
         Expression arg2 = new Numeric(2);
 

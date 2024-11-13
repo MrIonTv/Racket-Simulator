@@ -21,26 +21,33 @@ public class Addition extends BuiltinCallable {
     @Override
     public Expression execute(List<Expression> args) {
         if (args.isEmpty())
-            throw new InvalidCallableArgs("Operator + requires at least one Argument.");
+            throw new InvalidCallableArgs("Operator + requires at least one argument.");
 
         Expression subject = args.getFirst().evaluate();
-        if (subject instanceof QExpression)
-            throw new InvalidCallableArgs("Operator + requires all of its args to be not QExpressions. Received: " +
-                    subject.content() + ".");
-
         if (subject instanceof Symbol)
             subject = fixExpression(subject);
+        if (!(subject instanceof Numeric))
+            throw new InvalidCallableArgs("Operator + requires all of its args to be not QExpressions. Received: " +
+                    subject.stringContent() + ".");
+
         int subjectInt = Integer.parseInt(subject.stringContent());
 
         for (Expression arg : args.subList(1, args.size())) {
             Expression value = arg.evaluate();
+            if (subject instanceof Symbol)
+                subject = fixExpression(subject);
             if (!(value instanceof Numeric))
                 throw new InvalidCallableArgs("Operator + requires all of its args to be Numerical. Received: " +
-                        value.content() + ".");
+                        value.stringContent() + ".");
             int valueInt = Integer.parseInt(value.stringContent());
             subjectInt += valueInt;
         }
 
         return new Numeric(subjectInt);
+    }
+
+    @Override
+    protected Expression validateQExpression(QExpression expression) {
+        throw new InvalidCallableArgs("Operation + can't handle QExpression neither List as argument.");
     }
 }

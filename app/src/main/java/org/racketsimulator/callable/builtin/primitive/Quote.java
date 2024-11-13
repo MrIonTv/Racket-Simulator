@@ -21,6 +21,11 @@ public class Quote extends BuiltinCallable {
         Expression arg = args.getFirst();
         if (arg instanceof Numeric)
             return arg;
-        return new QExpression(List.of(arg));
+        return new QExpression(arg);
+    }
+
+    @Override
+    protected Expression validateQExpression(QExpression expression) {
+        throw new RuntimeException("Not implemented for Quote.");
     }
 }

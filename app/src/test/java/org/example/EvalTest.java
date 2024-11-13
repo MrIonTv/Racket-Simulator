@@ -38,7 +38,7 @@ public class EvalTest {
         Expression expectedExpression = new Numeric(10);  // Valor esperado de la evaluación
 
         Eval eval = new Eval(runtimeEnv, config.entranceParser());
-        QExpression qExpression = new QExpression(List.of(new Symbol("(+ 5 5)")));
+        QExpression qExpression = new QExpression(new Symbol("(+ 5 5)"));
         List<Expression> args = List.of(qExpression);
 
         // Act

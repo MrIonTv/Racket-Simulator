@@ -1,6 +1,7 @@
 package org.racketsimulator.callable.builtin;
 
 import org.racketsimulator.callable.Callable;
+import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.*;
 import org.racketsimulator.expressionbuilder.EnvironmentParser;
@@ -31,9 +32,7 @@ public abstract class BuiltinCallable implements Callable {
         return expression;
     }
 
-    protected Expression validateQExpression(QExpression expression) {
-        return null;
-    }
+    protected abstract Expression validateQExpression(QExpression expression);
 
     private Callable validateSymbol(Symbol action) {
         Expression symbol = accessSymbol(action);
@@ -50,7 +49,7 @@ public abstract class BuiltinCallable implements Callable {
         throw new InvalidExpression("Impossible to solve the symbol: " + symbol.stringContent());
     }
 
-    private Expression accessSymbol(Symbol action) {
+    protected Expression accessSymbol(Symbol action) {
         String value = action.stringContent();
 
         if (value.isEmpty())

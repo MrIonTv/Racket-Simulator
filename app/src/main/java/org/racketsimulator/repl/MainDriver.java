@@ -1,6 +1,5 @@
 package org.racketsimulator.repl;
 import org.racketsimulator.expression.Expression;
-import org.racketsimulator.expression.InvalidExpression;
 import org.racketsimulator.expressionbuilder.ExpressionBuilder;
 import org.racketsimulator.thowables.RacketSimError;
 
@@ -12,8 +11,8 @@ public class MainDriver implements REPL {
     public static final String INPUT_SYMBOL = "> ";
     public static final char OPEN_SYMBOL = '(';
     public static final char CLOSE_SYMBOL = ')';
+    private static final String TAB = "  ";
     private final ExpressionBuilder parser;
-    private final String tab = "  ";
 
     public MainDriver(ExpressionBuilder parser) {
         this.parser = parser;
@@ -39,7 +38,7 @@ public class MainDriver implements REPL {
             }
         }
 
-        System.out.println("Simulador Finalizado.");
+        System.out.println("Simulator Turned Off.");
     }
 
     private DriverInput read(Scanner scanner) {
@@ -73,7 +72,7 @@ public class MainDriver implements REPL {
             }
 
             if (!isBalanced) {
-                System.out.print(tab.repeat(balance));
+                System.out.print(TAB + TAB.repeat(balance));
                 line = scanner.nextLine();
             }
 

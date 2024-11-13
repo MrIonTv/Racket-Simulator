@@ -27,7 +27,7 @@ public class Multiplication extends BuiltinCallable {
         Expression subject = args.getFirst().evaluate();
         if (subject instanceof QExpression)
             throw new InvalidCallableArgs("Operator * requires all of its args to be not QExpressions. Received: " +
-                    subject.content() + ".");
+                    subject.stringContent() + ".");
 
         if (subject instanceof Symbol)
             subject = fixExpression(subject);
@@ -35,13 +35,20 @@ public class Multiplication extends BuiltinCallable {
 
         for (Expression arg : args.subList(1, args.size())) {
             Expression value = arg.evaluate();
+            if (value instanceof Symbol)
+                value = fixExpression(value);
             if (!(value instanceof Numeric))
                 throw new InvalidCallableArgs("Operator * requires all of its args to be Numerical. Received: " +
-                        value.content() + ".");
+                        value.stringContent() + ".");
             int valueInt = Integer.parseInt(value.stringContent());
             subjectInt *= valueInt;
         }
 
         return new Numeric(subjectInt);
+    }
+
+    @Override
+    protected Expression validateQExpression(QExpression expression) {
+        throw new InvalidCallableArgs("Operation * can't handle QExpression neither List as argument.");
     }
 }

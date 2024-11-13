@@ -31,7 +31,7 @@ public class ApplyTest {
     public void testApplyWithValidArguments() {
         Symbol symbol = new Symbol("+");
 
-        QExpression list = new QExpression(List.of(new Numeric(1), new Numeric(2)));
+        Expression list = new Pair(List.of(new Numeric(1), new Numeric(2)));
 
         Expression result = apply.execute(List.of(symbol, list));
 
@@ -48,7 +48,7 @@ public class ApplyTest {
     public void testApplyWithNonSymbolFirstArgument() {
         Symbol symbol = new Symbol("kek");
 
-        QExpression list = new QExpression(List.of(new Numeric(1), new Numeric(2)));
+        Expression list = new Pair(List.of(new Numeric(1), new Numeric(2)));
 
         assertThrows(InvalidExpression.class, () ->apply.execute(List.of(symbol, list)));
     }
@@ -57,7 +57,7 @@ public class ApplyTest {
     public void testApplyWithInvalidSecondArgument() {
         Symbol symbol = new Symbol("+");
 
-        QExpression list = new QExpression(List.of(new Numeric(1)));
+        QExpression list = new QExpression(new Numeric(1));
 
         assertThrows(InvalidCallableArgs.class, () ->apply.execute(List.of(symbol, list)));
     }

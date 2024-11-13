@@ -5,6 +5,7 @@ import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.Expression;
 import org.racketsimulator.expression.Numeric;
+import org.racketsimulator.expression.QExpression;
 import org.racketsimulator.expression.Symbol;
 
 import java.util.List;
@@ -46,5 +47,10 @@ public class Equals extends BuiltinCallable {
         if (valueOfTruth)
             return new Symbol("#t");
         return new Symbol("#f");
+    }
+
+    @Override
+    protected Expression validateQExpression(QExpression expression) {
+        throw new InvalidCallableArgs("Operation = can't handle QExpression neither List as argument.");
     }
 }

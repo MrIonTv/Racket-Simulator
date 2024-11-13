@@ -3,11 +3,11 @@ package org.racketsimulator.expression;
 import java.util.List;
 
 public class QExpression implements Expression{
-    private final String QUOTE_SYMBOL = "'";
-    private final List<Expression> values;
+    private static final String QUOTE_SYMBOL = "'";
+    private final Expression value;
 
-    public QExpression(List<Expression> values) {
-        this.values = values;
+    public QExpression(Expression value) {
+        this.value = value;
     }
 
     /**
@@ -23,7 +23,7 @@ public class QExpression implements Expression{
      */
     @Override
     public List<Expression> content() {
-        return values;
+        return List.of(value);
     }
 
     /**
@@ -31,17 +31,14 @@ public class QExpression implements Expression{
      */
     @Override
     public int valueSize() {
-        return values.size();
+        return 1;
     }
 
     @Override
     public String stringContent() {
-        StringBuilder result = new StringBuilder();
-        result.append(QUOTE_SYMBOL);
-        for (Expression value : values) {
-            result.append(value.stringContent()).append(" ");
-        }
-        result.deleteCharAt(result.length() - 1);
-        return result.toString();
+        if (value instanceof Numeric)
+            return value.stringContent();
+
+        return QUOTE_SYMBOL + value.stringContent();
     }
 }

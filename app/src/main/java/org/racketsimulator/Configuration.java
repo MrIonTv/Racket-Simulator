@@ -59,6 +59,9 @@ public class Configuration {
         runtime.defineSymbol(new Symbol("eval"), new Eval(runtime, new StringParser(runtime)));
 
         runtime.defineSymbol(new Symbol("define"), new Define(runtime));
+        runtime.defineSymbol(new Symbol("list"), new QList(runtime));
+        runtime.defineSymbol(new Symbol("car"), new Car(runtime));
+        runtime.defineSymbol(new Symbol("cdr"), new Cdr(runtime));
     }
     //TODO
     public HashMap<String, Callable> runTimeMap() {

@@ -31,7 +31,7 @@ class CondTest {
 
     @Test
     void testCondWithTrueCondition() {
-        Expression qTrue = new QExpression(List.of(new Symbol("true-result")));
+        Expression qTrue = new QExpression(new Symbol("true-result"));
         Expression trueCondition = new SExpression(List.of(new Symbol("else"), qTrue), runtime);
 
         Expression result = cond.execute(List.of(trueCondition));
@@ -41,8 +41,8 @@ class CondTest {
 
     @Test
     void testCondWithElseCondition() {
-        Expression qElse = new QExpression(List.of(new Symbol("else-result")));
-        Expression falseCondition = new SExpression(List.of(new Symbol("#f"), new QExpression(List.of(new Symbol("false-result")))), runtime);
+        Expression qElse = new QExpression(new Symbol("else-result"));
+        Expression falseCondition = new SExpression(List.of(new Symbol("#f"), new QExpression(new Symbol("false-result"))), runtime);
         Expression elseCondition = new SExpression(List.of(new Symbol("else"), qElse), runtime);
 
         Expression result = cond.execute(List.of(falseCondition, elseCondition));
@@ -58,8 +58,8 @@ class CondTest {
 
     @Test
     void testCondThrowsWhenElseNotAtEnd() {
-        Expression elseCondition = new SExpression(List.of(new Symbol("else"), new QExpression(List.of(new Symbol("else-result")))), runtime);
-        Expression trueCondition = new SExpression(List.of(new Symbol("#t"), new QExpression(List.of(new Symbol("true-result")))), runtime);
+        Expression elseCondition = new SExpression(List.of(new Symbol("else"), new QExpression(new Symbol("else-result"))), runtime);
+        Expression trueCondition = new SExpression(List.of(new Symbol("#t"), new QExpression(new Symbol("true-result"))), runtime);
 
         assertThrows(InvalidCallableArgs.class, () -> cond.execute(List.of(elseCondition, trueCondition)),
                 "Debería lanzar excepción si else no está al final.");

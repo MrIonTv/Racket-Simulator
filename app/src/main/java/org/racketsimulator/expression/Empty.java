@@ -29,6 +29,6 @@ public class Empty implements Expression{
 
     @Override
     public String stringContent() {
-        return "'()";
+        return "()";
     }
 }

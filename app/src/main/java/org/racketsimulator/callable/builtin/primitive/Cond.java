@@ -4,6 +4,7 @@ import org.racketsimulator.callable.InvalidCallableArgs;
 import org.racketsimulator.callable.builtin.BuiltinCallable;
 import org.racketsimulator.environment.Environment;
 import org.racketsimulator.expression.Expression;
+import org.racketsimulator.expression.QExpression;
 import org.racketsimulator.expression.SExpression;
 import org.racketsimulator.expressionbuilder.ExpressionBuilder;
 
@@ -40,6 +41,11 @@ public class Cond extends BuiltinCallable {
         }
 
         throw new InvalidCallableArgs("All of the conditions are false and there is no else condition.");
+    }
+
+    @Override
+    protected Expression validateQExpression(QExpression expression) {
+        throw new InvalidCallableArgs("Operation cond can't handle QExpression neither List as argument.");
     }
 
     private List<Expression> resolveConditions(Expression arg) {
